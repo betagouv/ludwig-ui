@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('acceptanceTests').controller('LayoutCtrl', function($scope, $state, $stateParams, $timeout, AcceptanceTestsService, UserService, keywords, organizations, states, activities) {
+angular.module('ludwig').controller('LayoutCtrl', function($scope, $state, $stateParams, $timeout, AcceptanceTestsService, UserService, keywords, organizations, states, activities) {
     $scope.activities = activities;
     $scope.keywords = keywords;
 

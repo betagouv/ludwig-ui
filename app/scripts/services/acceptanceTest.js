@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('acceptanceTests').factory('AcceptanceTestsService', function($q, $http, droitsDescription) {
+angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, droitsDescription) {
     var droits = _.indexBy(droitsDescription, 'id');
     var statusMapping = {
         'accepted-exact': 'ok',

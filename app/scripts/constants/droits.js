@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('acceptanceTests').constant('droitsDescription', [
+angular.module('ludwig').constant('droitsDescription', [
     {
         'id':'cmu_c',
         'hasMontant':false,

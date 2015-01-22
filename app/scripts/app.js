@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('acceptanceTests', ['ui.router', 'ngAnimate', 'ui.bootstrap', 'ngStorage', 'ngSanitize']);
+var app = angular.module('ludwig', ['ui.router', 'ngAnimate', 'ui.bootstrap', 'ngStorage', 'ngSanitize']);
 
 app.config(function($locationProvider, $stateProvider, $urlRouterProvider) {
     moment.lang('fr');

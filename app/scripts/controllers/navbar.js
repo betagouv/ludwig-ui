@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('acceptanceTests').controller('NavbarCtrl', function($scope, $state, UserService) {
+angular.module('ludwig').controller('NavbarCtrl', function($scope, $state, UserService) {
     $scope.navbarCollapsed = true;
 
     var setEmail = function() {

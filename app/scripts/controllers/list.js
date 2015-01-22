@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('acceptanceTests').controller('ListCtrl', function($scope, $modal, $window, $state, $stateParams, $http, AcceptanceTestsService, acceptanceTests) {
+angular.module('ludwig').controller('ListCtrl', function($scope, $modal, $window, $state, $stateParams, $http, AcceptanceTestsService, acceptanceTests) {
     $scope.tests = acceptanceTests;
     $scope.launch = AcceptanceTestsService.launchTest;
 

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('acceptanceTests').directive('activityTimeline', function() {
+angular.module('ludwig').directive('activityTimeline', function() {
     return {
         restrict: 'E',
         templateUrl: 'views/timeline.html',

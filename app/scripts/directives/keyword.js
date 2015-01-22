@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('acceptanceTests');
+var app = angular.module('ludwig');
 
 app.directive('keywordInput', function($timeout) {
     return {

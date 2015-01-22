@@ -33,7 +33,7 @@ var getActivityType = function(activity) {
     }
 };
 
-angular.module('acceptanceTests')
+angular.module('ludwig')
     .filter('activityTypeLabelFilter', function() {
         return function(activity) {
             if (hasType(activity)) {

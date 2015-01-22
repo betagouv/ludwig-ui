@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('acceptanceTests').controller('UsersCtrl', function($scope, $http, $state, users, organizations) {
+angular.module('ludwig').controller('UsersCtrl', function($scope, $http, $state, users, organizations) {
     $scope.users = users;
     $scope.organizations = organizations;
     $scope.newUser = {};

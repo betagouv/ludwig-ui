@@ -7,7 +7,7 @@
  * # MainCtrl
  * Controller of the acceptanceTestsApp
  */
-angular.module('acceptanceTests')
+angular.module('ludwig')
   .controller('MainCtrl', function () {
 
   });

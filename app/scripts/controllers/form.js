@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('acceptanceTests').controller('FormCtrl', function($scope, $http, $state, $stateParams, droitsDescription, droitsObtenus, test, keywords) {
+angular.module('ludwig').controller('FormCtrl', function($scope, $http, $state, $stateParams, droitsDescription, droitsObtenus, test, keywords) {
     $scope.keywords = keywords;
     $scope.droitsChoices = droitsDescription;
 

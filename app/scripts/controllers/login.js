@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('acceptanceTests').controller('LoginCtrl', function($scope, $state, $stateParams, $window, $timeout, UserService) {
+angular.module('ludwig').controller('LoginCtrl', function($scope, $state, $stateParams, $window, $timeout, UserService) {
     if (UserService.user()) {
         $state.go('index.list');
     }

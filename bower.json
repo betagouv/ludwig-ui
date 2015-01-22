@@ -1,0 +1,41 @@
+{
+  "name": "acceptance-tests",
+  "version": "0.0.0",
+  "homepage": "https://github.com/sgmap/accceptance-tests",
+  "authors": [
+    "Florian Delezenne <del.florian@gmail.com>"
+  ],
+  "description": "Module de tests d'acceptance",
+  "moduleType": [
+    "globals"
+  ],
+  "license": "AGPL-3.0",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "app/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.3.0",
+    "angular-sanitize": "^1.3.0",
+    "angular-animate": "^1.3.0",
+    "angular-ui-router": "~0.2.10",
+    "angular-bootstrap": "0.12.0",
+    "bootstrap-sass-official": "~3.3.1",
+    "ngstorage": "~0.3.0",
+    "moment": "~2.7.0",
+    "lodash": "~2.4.1",
+    "font-awesome": "~4.2"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.2.22"
+  },
+  "appPath": "app",
+  "testPath": "test/spec",
+  "resolutions": {
+    "angular": "^1.3.0"
+  }
+}

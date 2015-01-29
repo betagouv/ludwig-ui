@@ -12,6 +12,10 @@
         <h2>Raison du rejet</h2>
         <h3>{{activity.content.rejectionMessage}}</h3>
       </div>
+
+      <div ng-if="activity.type === 'results_update'">
+        Nouveau statut: <span ng-bind-html="activity.content.status | activityStatus"></span>
+      </div>
     </div>
   </div>
 </div>

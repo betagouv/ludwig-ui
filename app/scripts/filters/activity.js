@@ -53,4 +53,24 @@ angular.module('ludwig')
             var type = getActivityType(activity);
             return type.icon;
         };
+    })
+    .filter('activityStatus' , function($sce) {
+        return function(status) {
+            var res = '';
+            switch (status) {
+                case 'accepted-exact':
+                    res = '<span class="label label-success"><i class="fa fa-check"></i> Ok</span>';
+                    break;
+                case 'accepted-2pct':
+                    res = '<span class="label label-warning"><i class="fa fa-check"></i> Near</span>';
+                    break;
+                case 'accepted-10pct':
+                    res = '<span class="label label-warning"><i class="fa fa-check"></i> Near</span>';
+                    break;
+                case 'rejected':
+                    res = '<span class="label label-danger"><i class="fa fa-check"></i> Ko</span>';
+                    break;
+            }
+            return $sce.trustAsHtml(res);
+        };
     });

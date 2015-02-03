@@ -24,7 +24,12 @@ app.config(function($locationProvider, $stateProvider, $urlRouterProvider) {
                     });
                 },
                 states: function() {
-                    return [{id: 'validated', name: 'Valide'}, {id: 'pending', name: 'En attente'}, {id: 'rejected', name: 'Refusé'}];
+                    return [
+                        {id: 'validated', name: 'Valide'},
+                        {id: 'pending', name: 'En attente'},
+                        {id: 'rejected', name: 'Refusé'},
+                        {id: 'unclaimed', name:'Non attribué'}
+                    ];
                 },
                 activities: function() {
                     return [];

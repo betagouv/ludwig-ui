@@ -1,7 +1,12 @@
 'use strict';
 
-angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, droitsDescription) {
-    var droits = _.indexBy(droitsDescription, 'id');
+angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, PossibleValuesService) {
+    var droits = {};
+
+    PossibleValuesService.get().then(function(result) {
+        droits = _.indexBy(result.data, 'id');
+    });
+
     var statusMapping = {
         'accepted-exact': 'ok',
         'accepted-2pct': 'ok',
@@ -101,6 +106,10 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, d
                 _.map(tests, formatValues);
                 return orderTestsByKeywords(tests);
             });
+        },
+
+        simulate: function(test) {
+            return $http.post('/api/acceptance-tests/' + test._id + '/simulation');
         },
 
         launchTest: function(test) {

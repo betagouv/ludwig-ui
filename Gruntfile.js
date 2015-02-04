@@ -11,7 +11,7 @@ module.exports = function (grunt) {
 
   // Configurable paths for the application
   var appConfig = {
-    app: require('./bower.json').appPath || 'app',
+    app: 'app',
     dist: 'dist'
   };
 
@@ -20,52 +20,6 @@ module.exports = function (grunt) {
 
     // Project settings
     yeoman: appConfig,
-
-    // Watches files for changes and runs tasks based on the changed files
-    watch: {
-      bower: {
-        files: ['bower.json'],
-        tasks: ['wiredep']
-      },
-      js: {
-        files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
-        tasks: ['newer:jshint:all', 'injector:scripts'],
-      },
-      jsTest: {
-        files: ['test/spec/{,*/}*.js'],
-        tasks: ['newer:jshint:test', 'karma']
-      },
-      compass: {
-        files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
-        tasks: ['compass:server', 'autoprefixer']
-      },
-      gruntfile: {
-        files: ['Gruntfile.js']
-      }
-    },
-
-    // The actual grunt server settings
-    express: {
-      options: {
-        port: process.env.PORT || 9002
-      },
-      dev: {
-        options: {
-          script: 'server.js'
-        }
-      },
-      prod: {
-        options: {
-          script: 'server.js',
-          'node_env': 'production'
-        }
-      }
-    },
-    open: {
-      server: {
-        url: 'http://localhost:<%= express.options.port %>'
-      }
-    },
 
     // Make sure code styles are up to par and there are no obvious mistakes
     jshint: {
@@ -78,12 +32,6 @@ module.exports = function (grunt) {
           'Gruntfile.js',
           '<%= yeoman.app %>/scripts/{,*/}*.js'
         ]
-      },
-      test: {
-        options: {
-          jshintrc: 'test/.jshintrc'
-        },
-        src: ['test/spec/{,*/}*.js']
       }
     },
 
@@ -98,8 +46,7 @@ module.exports = function (grunt) {
             '!<%= yeoman.dist %>/.git{,*/}*'
           ]
         }]
-      },
-      server: '.tmp'
+      }
     },
 
     // Add vendor prefixed styles
@@ -149,11 +96,6 @@ module.exports = function (grunt) {
       dist: {
         options: {
           generatedImagesDir: '<%= yeoman.dist %>/images/generated'
-        }
-      },
-      server: {
-        options: {
-          debugInfo: true
         }
       }
     },
@@ -289,25 +231,11 @@ module.exports = function (grunt) {
 
     // Run some tasks in parallel to speed up the build process
     concurrent: {
-      server: [
-        'compass:server'
-      ],
-      test: [
-        'compass'
-      ],
       dist: [
         'compass:dist',
         'imagemin',
         'svgmin'
       ]
-    },
-
-    // Test settings
-    karma: {
-      unit: {
-        configFile: 'test/karma.conf.js',
-        singleRun: true
-      }
     },
 
     // Inject application script files into index.html (doesn't include bower)
@@ -335,34 +263,6 @@ module.exports = function (grunt) {
     }
   });
 
-  grunt.registerTask('express-keepalive', 'Keep grunt running', function() {
-    this.async();
-  });
-
-  grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
-    if (target === 'dist') {
-      return grunt.task.run(['build', 'express:prod', 'open', 'express-keepalive']);
-    }
-
-    grunt.task.run([
-      'clean:server',
-      'wiredep',
-      'injector',
-      'concurrent:server',
-      'autoprefixer',
-      'express:dev',
-      'open',
-      'watch'
-    ]);
-  });
-
-  grunt.registerTask('test', [
-    'clean:server',
-    'concurrent:test',
-    'autoprefixer',
-    'karma'
-  ]);
-
   grunt.registerTask('build', [
     'clean:dist',
     'wiredep',
@@ -382,7 +282,6 @@ module.exports = function (grunt) {
 
   grunt.registerTask('default', [
     'newer:jshint',
-    'test',
     'build'
   ]);
 };

@@ -76,31 +76,13 @@ app.config(function($locationProvider, $stateProvider, $urlRouterProvider) {
             controller: 'LoginCtrl',
             anonymous: true
         })
-        .state('new', {
-            url: '/new/:situationId',
-            templateUrl: 'views/form.html',
-            controller: 'FormCtrl',
-            resolve: {
-                droitsObtenus: ['$http', '$stateParams', function($http, $stateParams) {
-                    return $http.get('/api/situations/' + $stateParams.situationId + '/simulation').then(function(result) {
-                        return result.data;
-                    });
-                }],
-                test: function() {
-                    return null;
-                },
-                keywords: function(AcceptanceTestsService) {
-                    return AcceptanceTestsService.getKeywords();
-                }
-            }
-        })
         .state('edit', {
             url: '/:testId/edit',
             templateUrl: 'views/form.html',
             controller: 'FormCtrl',
             resolve: {
-                droitsObtenus: function($http, test) {
-                    return $http.get('/api/situations/' + test.situation + '/simulation').then(function(result) {
+                droitsObtenus: function($http, test, AcceptanceTestsService) {
+                    return AcceptanceTestsService.simulate(test).then(function(result) {
                         return result.data;
                     });
                 },
@@ -111,6 +93,11 @@ app.config(function($locationProvider, $stateProvider, $urlRouterProvider) {
                 },
                 keywords: function(AcceptanceTestsService) {
                     return AcceptanceTestsService.getKeywords();
+                },
+                possibleValues: function(PossibleValuesService) {
+                    return PossibleValuesService.get().then(function(result) {
+                        return result.data;
+                    });
                 }
             }
         })

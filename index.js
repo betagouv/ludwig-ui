@@ -2,7 +2,7 @@ var express = require('express');
 var favicon = require('serve-favicon');
 var path = require('path');
 
-module.exports = function(app) {
+module.exports = function(app, templatePath) {
     var env = app.get('env');
 
     if ('development' === env) {
@@ -23,6 +23,12 @@ module.exports = function(app) {
     if ('production' === env) {
         app.use(favicon(path.join(__dirname, 'dist', 'favicon.ico')));
         app.use(express.static(path.join(__dirname, 'dist')));
+    }
+
+    console.log(templatePath);
+
+    if (templatePath) {
+        app.use('/scripts/template.js', express.static(templatePath));
     }
 
     app.route('/*').get(function(req, res) {

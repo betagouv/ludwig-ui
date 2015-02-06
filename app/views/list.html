@@ -129,8 +129,8 @@
         [<a ui-sref="index.list({testId: test._id})">Permalien</a>]
       </small>
     </p>
-    <div class="well" ng-if="test.showSituation && test.situationObject">
-      <recap-situation situation="test.situationObject"></recap-situation>
+    <div class="well" ng-if="test.showSituation">
+      <scenario test="test"></scenario>
     </div>
     <div ng-if="test.timeline">
       <activity-timeline activities="test.timeline" ng-if="test.showTimeline && test.timeline"></activity-timeline>

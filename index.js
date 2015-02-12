@@ -2,7 +2,7 @@ var express = require('express');
 var favicon = require('serve-favicon');
 var path = require('path');
 
-module.exports = function(app, templatePath) {
+module.exports = function(app, templatePath, url) {
     var env = app.get('env');
 
     if ('development' === env) {
@@ -16,19 +16,19 @@ module.exports = function(app, templatePath) {
             next();
         });
 
-        app.use(express.static(path.join(__dirname, '.tmp')));
-        app.use(express.static(path.join(__dirname, 'app')));
+        app.use(url, express.static(path.join(__dirname, '.tmp')));
+        app.use(url, express.static(path.join(__dirname, 'app')));
     }
 
     if ('production' === env) {
         app.use(favicon(path.join(__dirname, 'dist', 'favicon.ico')));
-        app.use(express.static(path.join(__dirname, 'dist')));
+        app.use(url, express.static(path.join(__dirname, 'dist')));
     }
 
     console.log(templatePath);
 
     if (templatePath) {
-        app.use('/scripts/template.js', express.static(templatePath));
+        app.use(url+ '/scripts/template.js', express.static(templatePath));
     }
 
     app.route('/*').get(function(req, res) {

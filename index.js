@@ -25,13 +25,7 @@ module.exports = function(app, templatePath, url) {
         app.use(url, express.static(path.join(__dirname, 'dist')));
     }
 
-    console.log(templatePath);
-
     if (templatePath) {
         app.use(url+ '/scripts/template.js', express.static(templatePath));
     }
-
-    app.route('/*').get(function(req, res) {
-        res.sendfile(__dirname + '/app/index.html');
-    });
 };

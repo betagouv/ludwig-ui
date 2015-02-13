@@ -121,7 +121,7 @@
           Timeline
           <i class="fa" ng-class="{'fa-chevron-down': test.showTimeline, 'fa-chevron-right': !test.showTimeline}"></i>
         </button>
-        <small ng-if="!readOnly">
+        <small ng-if="!readOnly && showUrls">
           [<a href="/api/situations/{{ test.situation }}">Situation DDS</a>]
           [<a href="/api/situations/{{ test.situation }}/openfisca-request">Requête OpenFisca</a>]
           [<a href="/api/situations/{{ test.situation }}/openfisca-response">Réponse OpenFisca</a>]

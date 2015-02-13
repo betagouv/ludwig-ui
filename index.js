@@ -1,8 +1,10 @@
+'use strict';
+
 var express = require('express');
 var favicon = require('serve-favicon');
 var path = require('path');
 
-module.exports = function(app, templatePath, url) {
+module.exports = function(app, baseDir, config) {
     var env = app.get('env');
 
     if ('development' === env) {
@@ -16,16 +18,15 @@ module.exports = function(app, templatePath, url) {
             next();
         });
 
-        app.use(url, express.static(path.join(__dirname, '.tmp')));
-        app.use(url, express.static(path.join(__dirname, 'app')));
+        app.use(config.baseUrl, express.static(path.join(__dirname, '.tmp')));
+        app.use(config.baseUrl, express.static(path.join(__dirname, 'app')));
     }
 
     if ('production' === env) {
         app.use(favicon(path.join(__dirname, 'dist', 'favicon.ico')));
-        app.use(url, express.static(path.join(__dirname, 'dist')));
+        app.use(config.baseUrl, express.static(path.join(__dirname, 'dist')));
     }
 
-    if (templatePath) {
-        app.use(url+ '/scripts/template.js', express.static(templatePath));
-    }
+    app.use(config.baseUrl+ '/scripts/template.js', express.static(path.join(baseDir, config.scenarioTemplate)));
+    app.use(config.baseUrl+ '/scripts/constants.js', express.static(path.join(baseDir, config.constants)));
 };

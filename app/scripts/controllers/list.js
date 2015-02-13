@@ -1,8 +1,9 @@
 'use strict';
 
-angular.module('ludwig').controller('ListCtrl', function($scope, $modal, $window, $state, $stateParams, $http, AcceptanceTestsService, acceptanceTests) {
+angular.module('ludwig').controller('ListCtrl', function($scope, $modal, $window, $state, $stateParams, $http, config, AcceptanceTestsService, acceptanceTests) {
     $scope.tests = acceptanceTests;
     $scope.launch = AcceptanceTestsService.launchTest;
+    $scope.showUrls = config.showUrls;
 
     $scope.validTestsNb = _.where(acceptanceTests, { currentStatus: 'accepted-exact' }).length;
     $scope.validTestsNb += _.where(acceptanceTests, { currentStatus: 'accepted-2pct' }).length;

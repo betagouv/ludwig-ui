@@ -29,4 +29,9 @@ module.exports = function(app, baseDir, config) {
 
     app.use(config.baseUrl+ '/scripts/template.js', express.static(path.join(baseDir, config.scenarioTemplate)));
     app.use(config.baseUrl+ '/scripts/constants.js', express.static(path.join(baseDir, config.constants)));
+
+
+    app.route(config.baseUrl + '/*').get(function(req, res) {
+        res.sendfile(path.join(__dirname, 'app/index.html'));
+    });
 };

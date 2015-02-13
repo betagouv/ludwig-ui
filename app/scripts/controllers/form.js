@@ -5,7 +5,7 @@ angular.module('ludwig').controller('FormCtrl', function($scope, $http, $state, 
     $scope.droitsChoices = possibleValues;
     $scope.test = test;
 
-    $scope.pageTitle = 'Modification du cas de test';
+    $scope.pageTitle = 'Modification du cas de test: ';
     if (test.name) {
         $scope.pageTitle +=  '"' + test.name + '"';
     }

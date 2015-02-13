@@ -260,10 +260,19 @@ module.exports = function (grunt) {
             ]
         }
       }
-    }
+    },
+
+    bower: {
+        install: {
+            options: {
+                targetDir: 'app/bower_components'
+            }
+        }
+      }
   });
 
   grunt.registerTask('build', [
+    'bower:install',
     'clean:dist',
     'wiredep',
     'injector',

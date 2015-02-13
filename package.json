@@ -13,6 +13,7 @@
     "grunt": "^0.4.1",
     "grunt-asset-injector": "^0.1.0",
     "grunt-autoprefixer": "2.2.0",
+    "grunt-bower-task": "^0.4.0",
     "grunt-concurrent": "1.0.0",
     "grunt-contrib-clean": "0.6.0",
     "grunt-contrib-compass": "1.0.1",
@@ -32,13 +33,13 @@
     "grunt-usemin": "3.0.0",
     "grunt-wiredep": "2.0.0",
     "jshint-stylish": "1.0.0",
-    "time-grunt": "1.0.0"
+    "time-grunt": "1.0.0",
+    "load-grunt-tasks": "~0.2.0"
   },
   "engines": {
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "grunt test",
-    "postinstall": "npm install && bower install && grunt build"
+    "test": "grunt test"
   }
 }

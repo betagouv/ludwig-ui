@@ -12,17 +12,6 @@ angular.module('ludwig').controller('ListCtrl', function($scope, $modal, $window
 
     $scope.$emit('stopWaiting');
 
-    $scope.toggleTimeline = function(test) {
-        if (!test.timeline) {
-            $scope.getTimeline(test);
-        }
-    };
-
-    if ($scope.tests.length === 1) {
-        $scope.tests[0].open = true;
-        $scope.toggleTimeline($scope.tests[0]);
-    }
-
     $scope.getTimeline = function(test) {
         $http.get('/api/acceptance-tests/' + test._id + '/timeline').then(function(result) {
             if (result.data.length === 0) {
@@ -33,6 +22,17 @@ angular.module('ludwig').controller('ListCtrl', function($scope, $modal, $window
             test.timeline = result.data;
         });
     };
+
+    $scope.toggleTimeline = function(test) {
+        if (!test.timeline) {
+            $scope.getTimeline(test);
+        }
+    };
+
+    if ($scope.tests.length === 1) {
+        $scope.tests[0].open = true;
+        $scope.toggleTimeline($scope.tests[0]);
+    }
 
     $scope.gotoDebugOpenFisca = function(situation) {
         $http.get('/api/situations/' + situation + '/openfisca-request').then(function(result) {

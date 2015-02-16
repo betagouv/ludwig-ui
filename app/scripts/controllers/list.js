@@ -17,11 +17,6 @@ angular.module('ludwig').controller('ListCtrl', function($scope, $modal, $window
     $scope.$emit('stopWaiting');
 
     $scope.toggleSituation = function(test) {
-        if (!test.situationObject) {
-            $http.get('/api/situations/' + test.situation).then(function(result) {
-                test.situationObject = result.data;
-            });
-        }
         test.showSituation = !test.showSituation;
         test.showTimeline = false;
     };

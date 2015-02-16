@@ -28,7 +28,8 @@
     ng-class="{'panel-success': test.status === 'ok',
               'panel-danger': test.status === 'ko',
               'panel-warning': test.status === 'near'}"
-    ng-repeat="test in tests">
+    ng-repeat="test in tests"
+    ng-click="toggleTimeline(test)">
     <accordion-heading>
       <span class="test-is-valid" ng-if="!readOnly">
         <i ng-if="test.state === 'validated'" class="fa fa-check-circle" tooltip="Test validé"></i>
@@ -90,36 +91,46 @@
         </p>
       </div>
 
+      <div class="clearfix"></div>
+
       <p ng-if="test.displayDescription" ng-bind-html-safe="test.displayDescription"></p>
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>Droit</th>
-            <th>Valeur attendue</th>
-            <th>Valeur obtenue</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="expectedResult in test.expectedResults"
-            ng-class="{'success': expectedResult.displayStatus === 'ok',
-                      'danger': expectedResult.displayStatus === 'ko',
-                      'info': expectedResult.displayStatus === 'unknown',
-                      'warning': expectedResult.displayStatus === 'near'}">
-            <td>{{ expectedResult.displayLabel }}</td>
-            <td>{{ expectedResult.displayExpected }}</td>
-            <td>{{ expectedResult.displayResult }}</td>
-          </tr>
-        </tbody>
-      </table>
+
+      <div class="row">
+        <div class="col-lg-6">
+          <h3>Valeurs attendues</h3>
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Droit</th>
+                  <th>Valeur attendue</th>
+                  <th>Valeur obtenue</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="expectedResult in test.expectedResults"
+                  ng-class="{'success': expectedResult.displayStatus === 'ok',
+                            'danger': expectedResult.displayStatus === 'ko',
+                            'info': expectedResult.displayStatus === 'unknown',
+                            'warning': expectedResult.displayStatus === 'near'}">
+                  <td>{{ expectedResult.displayLabel }}</td>
+                  <td>{{ expectedResult.displayExpected }}</td>
+                  <td>{{ expectedResult.displayResult }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <h3>Timeline</h3>
+          <activity-timeline activities="test.timeline"></activity-timeline>
+        </div>
+      </div>
 
       <p class="detail-situation">
-        <button type="button" class="btn btn-default btn-xs" ng-click="toggleSituation(test)">
+        <button type="button" class="btn btn-default btn-xs" ng-click="test.showSituation = !test.showSituation">
           Détail de la situation
           <i class="fa" ng-class="{'fa-chevron-down': test.showSituation, 'fa-chevron-right': !test.showSituation}"></i>
-        </button>
-        <button type="button" class="btn btn-default btn-xs" ng-if="!readOnly" ng-click="toggleTimeline(test)">
-          Timeline
-          <i class="fa" ng-class="{'fa-chevron-down': test.showTimeline, 'fa-chevron-right': !test.showTimeline}"></i>
         </button>
         <small ng-if="!readOnly && showUrls">
           [<a href="/api/situations/{{ test.scenario.situationId }}">Situation DDS</a>]
@@ -130,11 +141,8 @@
           [<a ui-sref="index.list({testId: test._id})">Permalien</a>]
         </small>
       </p>
-      <div class="well" ng-if="test.showSituation">
+      <div ng-if="test.showSituation">
         <scenario test="test"></scenario>
-      </div>
-      <div ng-if="test.timeline">
-        <activity-timeline activities="test.timeline" ng-if="test.showTimeline && test.timeline"></activity-timeline>
       </div>
     </div>
   </accordion-group>

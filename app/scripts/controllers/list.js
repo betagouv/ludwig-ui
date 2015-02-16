@@ -16,17 +16,10 @@ angular.module('ludwig').controller('ListCtrl', function($scope, $modal, $window
 
     $scope.$emit('stopWaiting');
 
-    $scope.toggleSituation = function(test) {
-        test.showSituation = !test.showSituation;
-        test.showTimeline = false;
-    };
-
     $scope.toggleTimeline = function(test) {
         if (!test.timeline) {
             $scope.getTimeline(test);
         }
-        test.showTimeline = !test.showTimeline;
-        test.showSituation = false;
     };
 
     $scope.getTimeline = function(test) {

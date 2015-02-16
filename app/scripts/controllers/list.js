@@ -10,11 +10,6 @@ angular.module('ludwig').controller('ListCtrl', function($scope, $modal, $window
     $scope.warningTestsNb = _.where(acceptanceTests, { currentStatus: 'accepted-10pct' }).length;
     $scope.errorTestsNb = _.where(acceptanceTests, { currentStatus: 'rejected' }).length;
 
-    if ($scope.tests.length === 1) {
-        $scope.tests[0].open = true;
-        $scope.toggleTimeline($scope.tests[0]);
-    }
-
     $scope.$emit('stopWaiting');
 
     $scope.toggleTimeline = function(test) {
@@ -22,6 +17,11 @@ angular.module('ludwig').controller('ListCtrl', function($scope, $modal, $window
             $scope.getTimeline(test);
         }
     };
+
+    if ($scope.tests.length === 1) {
+        $scope.tests[0].open = true;
+        $scope.toggleTimeline($scope.tests[0]);
+    }
 
     $scope.getTimeline = function(test) {
         $http.get('/api/acceptance-tests/' + test._id + '/timeline').then(function(result) {

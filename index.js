@@ -6,6 +6,7 @@ var path = require('path');
 
 module.exports = function(app, baseDir, config) {
     var env = app.get('env');
+    var servedDirectory = 'app';
 
     if ('development' === env) {
         // Disable caching of scripts for easier testing
@@ -19,14 +20,14 @@ module.exports = function(app, baseDir, config) {
         });
 
         app.use(config.baseUrl, express.static(path.join(__dirname, '.tmp')));
-        app.use(config.baseUrl, express.static(path.join(__dirname, 'app')));
     }
 
     if ('production' === env) {
+        servedDirectory = 'dist';
         app.use(favicon(path.join(__dirname, 'dist', 'favicon.ico')));
-        app.use(config.baseUrl, express.static(path.join(__dirname, 'dist')));
     }
 
+    app.use(config.baseUrl, express.static(path.join(__dirname, servedDirectory)));
     app.use(config.baseUrl + '/scripts/template.js', express.static(path.join(baseDir, config.scenarioTemplate)));
     app.use(config.baseUrl + '/scripts/constants.js', express.static(path.join(baseDir, config.constants)));
 
@@ -34,8 +35,7 @@ module.exports = function(app, baseDir, config) {
         res.type('application/javascript').send('window.serverConfig = ' + JSON.stringify(config.serverConfig || {}) + ';');
     });
 
-
     app.route(config.baseUrl + '/*').get(function(req, res) {
-        res.sendfile(path.join(__dirname, 'app/index.html'));
+        res.sendfile(path.join(__dirname, servedDirectory, 'index.html'));
     });
 };

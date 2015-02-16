@@ -12,6 +12,7 @@ angular.module('ludwig').controller('ListCtrl', function($scope, $modal, $window
 
     if ($scope.tests.length === 1) {
         $scope.tests[0].open = true;
+        $scope.toggleTimeline($scope.tests[0]);
     }
 
     $scope.$emit('stopWaiting');

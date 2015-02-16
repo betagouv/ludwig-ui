@@ -54,15 +54,13 @@ angular.module('ludwig')
             return type.icon;
         };
     })
-    .filter('activityStatus' , function($sce) {
+    .filter('activityStatus', function($sce) {
         return function(status) {
             var res = '';
             switch (status) {
                 case 'accepted-exact':
-                    res = '<span class="label label-success"><i class="fa fa-check"></i> Ok</span>';
-                    break;
                 case 'accepted-2pct':
-                    res = '<span class="label label-warning"><i class="fa fa-check"></i> Near</span>';
+                    res = '<span class="label label-success"><i class="fa fa-check"></i> Ok</span>';
                     break;
                 case 'accepted-10pct':
                     res = '<span class="label label-warning"><i class="fa fa-check"></i> Near</span>';

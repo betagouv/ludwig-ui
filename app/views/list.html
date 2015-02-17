@@ -93,9 +93,11 @@
 
       <div class="clearfix"></div>
 
-      <p ng-if="test.displayDescription" ng-bind-html-safe="test.displayDescription"></p>
-
       <div class="row">
+        <div class="col-lg-6">
+          <h3>Description du test</h3>
+          <p ng-bind-html="test.htmlDescription"></p>
+        </div>
         <div class="col-lg-6">
           <h3>Valeurs attendues</h3>
           <div class="table-responsive">
@@ -120,6 +122,14 @@
               </tbody>
             </table>
           </div>
+
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-6">
+          <h3>Situation testée</h3>
+          <scenario test="test"></scenario>
         </div>
         <div class="col-lg-6">
           <h3>Timeline</h3>
@@ -127,11 +137,7 @@
         </div>
       </div>
 
-      <p class="detail-situation">
-        <button type="button" class="btn btn-default btn-xs" ng-click="test.showSituation = !test.showSituation">
-          Détail de la situation
-          <i class="fa" ng-class="{'fa-chevron-down': test.showSituation, 'fa-chevron-right': !test.showSituation}"></i>
-        </button>
+      <p class="liste-liens">
         <small ng-if="!readOnly && showUrls">
           [<a href="/api/situations/{{ test.scenario.situationId }}">Situation DDS</a>]
           [<a href="/api/situations/{{ test.scenario.situationId }}/openfisca-request">Requête OpenFisca</a>]
@@ -141,9 +147,6 @@
           [<a ui-sref="index.list({testId: test._id})">Permalien</a>]
         </small>
       </p>
-      <div ng-if="test.showSituation">
-        <scenario test="test"></scenario>
-      </div>
     </div>
   </accordion-group>
 </accordion>

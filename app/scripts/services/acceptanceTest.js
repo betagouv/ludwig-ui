@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, PossibleValuesService) {
+angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $filter, PossibleValuesService) {
     var droits = {};
 
     PossibleValuesService.get().then(function(result) {
@@ -41,17 +41,19 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, P
         return '';
     };
 
-    var newLineToBr = function(text) {
+    var htmlDescription = function(text) {
         if (!text) {
             return '';
         }
 
-        text = text
+        var result = text
             .replace(/&/g, '&amp;')
             .replace(/>/g, '&gt;')
             .replace(/</g, '&lt;');
 
-        return text.replace(/\n/g, '<br>');
+        result = $filter('linky')(result);
+
+        return result.replace(/\n/g, '<br>');
     };
 
     var formatValues = function(test) {
@@ -65,7 +67,7 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, P
         }
 
         test.status = statusMapping[test.currentStatus];
-        test.displayDescription = newLineToBr(test.description);
+        test.htmlDescription = htmlDescription(test.description);
 
         if (test.lastExecution) {
             test.expectedResults = test.lastExecution.results;

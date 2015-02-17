@@ -46,14 +46,10 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
             return '';
         }
 
-        var result = text
-            .replace(/&/g, '&amp;')
-            .replace(/>/g, '&gt;')
-            .replace(/</g, '&lt;');
+        var result = $filter('linky')(text);
+        result = result.replace(/&#10;/g, '<br>');
 
-        result = $filter('linky')(result);
-
-        return result.replace(/\n/g, '<br>');
+        return result;
     };
 
     var formatValues = function(test) {

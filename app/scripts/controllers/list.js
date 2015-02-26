@@ -1,16 +1,32 @@
 'use strict';
 
-angular.module('ludwig').controller('ListCtrl', function($scope, $modal, $window, $state, $stateParams, $http, config, AcceptanceTestsService, acceptanceTests) {
-    $scope.tests = acceptanceTests;
+angular.module('ludwig').controller('ListCtrl', function($scope, $timeout, $q, $modal, $window, $state, $stateParams, $http, config, AcceptanceTestsService, acceptanceTests) {
     $scope.launch = AcceptanceTestsService.launchTest;
     $scope.showUrls = config.showUrls;
 
-    $scope.validTestsNb = _.where(acceptanceTests, { currentStatus: 'accepted-exact' }).length;
-    $scope.validTestsNb += _.where(acceptanceTests, { currentStatus: 'accepted-2pct' }).length;
-    $scope.warningTestsNb = _.where(acceptanceTests, { currentStatus: 'accepted-10pct' }).length;
-    $scope.errorTestsNb = _.where(acceptanceTests, { currentStatus: 'rejected' }).length;
-
     $scope.$emit('stopWaiting');
+
+    var appendTests = function(index) {
+        return function() {
+            $scope.tests = $scope.tests.concat(acceptanceTests.slice(index, index + 30));
+        }
+    };
+
+    $scope.tests = [];
+    var promises = [];
+    for (var i = 0; i < acceptanceTests.length; i = i + 30) {
+        promises.push($timeout(appendTests(i), i));
+    }
+    $q.all(promises).then(function() {
+        if ($scope.tests.length === 1) {
+            $scope.tests[0].open = true;
+            $scope.toggleTimeline($scope.tests[0]);
+        }
+        $scope.validTestsNb = _.where(acceptanceTests, { currentStatus: 'accepted-exact' }).length;
+        $scope.validTestsNb += _.where(acceptanceTests, { currentStatus: 'accepted-2pct' }).length;
+        $scope.warningTestsNb = _.where(acceptanceTests, { currentStatus: 'accepted-10pct' }).length;
+        $scope.errorTestsNb = _.where(acceptanceTests, { currentStatus: 'rejected' }).length;
+    });
 
     $scope.getTimeline = function(test) {
         $http.get('/api/acceptance-tests/' + test._id + '/timeline').then(function(result) {
@@ -28,11 +44,6 @@ angular.module('ludwig').controller('ListCtrl', function($scope, $modal, $window
             $scope.getTimeline(test);
         }
     };
-
-    if ($scope.tests.length === 1) {
-        $scope.tests[0].open = true;
-        $scope.toggleTimeline($scope.tests[0]);
-    }
 
     $scope.gotoDebugOpenFisca = function(situation) {
         $http.get('/api/situations/' + situation + '/openfisca-request').then(function(result) {

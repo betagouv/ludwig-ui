@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ludwig').controller('LayoutCtrl', function($scope, $state, $stateParams, $timeout, AcceptanceTestsService, UserService, keywords, organizations, states, activities) {
+angular.module('ludwig').controller('LayoutCtrl', function($scope, $state, $stateParams, $timeout, AcceptanceTestsService, UserService, keywords, states, activities) {
     $scope.activities = activities;
     $scope.keywords = keywords;
 
@@ -26,9 +26,6 @@ angular.module('ludwig').controller('LayoutCtrl', function($scope, $state, $stat
         return filterObj;
     };
 
-    $scope.organizations = organizations;
-    $scope.selectedOrganizations = ($stateParams.organization) ? toFilterObj($stateParams.organization) : {};
-
     $scope.states = states;
     $scope.selectedStates = ($stateParams.state) ? toFilterObj($stateParams.state) : {};
 
@@ -50,11 +47,6 @@ angular.module('ludwig').controller('LayoutCtrl', function($scope, $state, $stat
         var filters = {};
 
         filters.keyword = $scope.selectedKeywords;
-
-        var extractedOrg = extractSelectedFilters($scope.selectedOrganizations);
-        if (extractedOrg.length > 0) {
-            filters.organization = extractedOrg;
-        }
 
         var extractedState = extractSelectedFilters($scope.selectedStates);
         if (extractedState.length > 0) {

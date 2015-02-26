@@ -18,11 +18,6 @@ app.config(function($locationProvider, $stateProvider, $urlRouterProvider) {
                 keywords: function(AcceptanceTestsService) {
                     return AcceptanceTestsService.getKeywords();
                 },
-                organizations: function($http) {
-                    return $http.get('/api/acceptance-tests/organizations').then(function(result) {
-                        return result.data;
-                    });
-                },
                 states: function() {
                     return [
                         {id: 'validated', name: 'Valide'},

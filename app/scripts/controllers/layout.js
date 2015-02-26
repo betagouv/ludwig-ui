@@ -31,12 +31,6 @@ angular.module('ludwig').controller('LayoutCtrl', function($scope, $state, $stat
 
     $scope.user = UserService.user();
 
-    $scope.tabs = [
-        { heading: 'Liste des tests', route:'index.list' } /*,
-        { heading: 'Timeline', route:'index.timeline' },
-        { heading: 'Statistiques', route:'index.stats' } */
-    ];
-
     var extractSelectedFilters = function(selection) {
         return _.chain(selection).keys().filter(function(current) {
             return selection[current];
@@ -56,26 +50,8 @@ angular.module('ludwig').controller('LayoutCtrl', function($scope, $state, $stat
         $state.go('index.list', filters, { reload: true });
     };
 
-    $scope.setWaiting = function(tab) {
-        if (!$scope.active(tab.route)) {
-            tab.waiting = true;
-        }
-    };
-
     $scope.active = function(route) {
         return $state.is(route);
     };
-
-    $scope.$on('stopWaiting', function() {
-        $scope.tabs.forEach(function(tab) {
-            tab.waiting = false;
-        });
-    });
-
-    $scope.$on('$stateChangeSuccess', function() {
-        $scope.tabs.forEach(function(tab) {
-            tab.active = $scope.active(tab.route);
-        });
-    });
 });
 

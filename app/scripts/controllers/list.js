@@ -4,8 +4,6 @@ angular.module('ludwig').controller('ListCtrl', function($scope, $timeout, $q, $
     $scope.launch = AcceptanceTestsService.launchTest;
     $scope.showUrls = config.showUrls;
 
-    $scope.$emit('stopWaiting');
-
     var appendTests = function(index) {
         return function() {
             $scope.tests = $scope.tests.concat(acceptanceTests.slice(index, index + 30));

@@ -20,14 +20,4 @@
   </div>
 </div>
 
-<div class="ui-view-tabs">
-  <tabset>
-    <tab ng-repeat="tab in tabs" active="tab.active" ui-sref="{{tab.route}}" ng-click="setWaiting(tab)">
-      <tab-heading>
-        <span ng-if="tab.waiting"><i class="fa fa-spinner fa-spin"></i></span> {{tab.heading}}
-      </tab-heading>
-    </tab>
-  </tabset>
-
-  <ui-view></ui-view>
-</div>
+<ui-view></ui-view>

@@ -11,9 +11,10 @@ angular.module('ludwig').controller('ListCtrl', function($scope, $timeout, $q, $
     };
 
     $scope.tests = [];
+    $scope.ready = false;
     var promises = [];
     for (var i = 0; i < acceptanceTests.length; i = i + 30) {
-        promises.push($timeout(appendTests(i), i));
+        promises.push($timeout(appendTests(i)));
     }
     $q.all(promises).then(function() {
         if ($scope.tests.length === 1) {
@@ -24,6 +25,7 @@ angular.module('ludwig').controller('ListCtrl', function($scope, $timeout, $q, $
         $scope.validTestsNb += _.where(acceptanceTests, { currentStatus: 'accepted-2pct' }).length;
         $scope.warningTestsNb = _.where(acceptanceTests, { currentStatus: 'accepted-10pct' }).length;
         $scope.errorTestsNb = _.where(acceptanceTests, { currentStatus: 'rejected' }).length;
+        $scope.ready = true;
     });
 
     $scope.getTimeline = function(test) {

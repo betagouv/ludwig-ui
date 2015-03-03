@@ -1,0 +1,87 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/node', '/usr/bin/npm', 'link', 'sgmap-ludwig-ui' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.33
+4 verbose node symlink /usr/bin/node
+5 verbose install where,what [ '/home/nanocom/npm/lib', [ 'sgmap-ludwig-ui' ] ]
+6 warn package.json ludwig-api@0.1.0 No README data
+7 warn package.json ludwig-ui@0.1.0 No repository field.
+8 warn package.json sgmap-mes-aides-api@0.1.1 No repository field.
+9 verbose cache add [ 'sgmap-ludwig-ui', null ]
+10 verbose cache add name=undefined spec="sgmap-ludwig-ui" args=["sgmap-ludwig-ui",null]
+11 verbose parsed url { protocol: null,
+11 verbose parsed url   slashes: null,
+11 verbose parsed url   auth: null,
+11 verbose parsed url   host: null,
+11 verbose parsed url   port: null,
+11 verbose parsed url   hostname: null,
+11 verbose parsed url   hash: null,
+11 verbose parsed url   search: null,
+11 verbose parsed url   query: null,
+11 verbose parsed url   pathname: 'sgmap-ludwig-ui',
+11 verbose parsed url   path: 'sgmap-ludwig-ui',
+11 verbose parsed url   href: 'sgmap-ludwig-ui' }
+12 silly lockFile 74ca109f-sgmap-ludwig-ui sgmap-ludwig-ui
+13 verbose lock sgmap-ludwig-ui /home/nanocom/.npm/74ca109f-sgmap-ludwig-ui.lock
+14 silly lockFile 74ca109f-sgmap-ludwig-ui sgmap-ludwig-ui
+15 silly lockFile 74ca109f-sgmap-ludwig-ui sgmap-ludwig-ui
+16 verbose addNamed [ 'sgmap-ludwig-ui', '' ]
+17 verbose addNamed [ null, '*' ]
+18 silly lockFile 4edf00f8-sgmap-ludwig-ui sgmap-ludwig-ui@
+19 verbose lock sgmap-ludwig-ui@ /home/nanocom/.npm/4edf00f8-sgmap-ludwig-ui.lock
+20 silly addNameRange { name: 'sgmap-ludwig-ui', range: '*', hasData: false }
+21 verbose request where is /sgmap-ludwig-ui
+22 verbose request registry https://registry.npmjs.org/
+23 verbose request id 6f2982016fa4a138
+24 verbose url raw /sgmap-ludwig-ui
+25 verbose url resolving [ 'https://registry.npmjs.org/', './sgmap-ludwig-ui' ]
+26 verbose url resolved https://registry.npmjs.org/sgmap-ludwig-ui
+27 verbose request where is https://registry.npmjs.org/sgmap-ludwig-ui
+28 info trying registry request attempt 1 at 13:49:25
+29 http GET https://registry.npmjs.org/sgmap-ludwig-ui
+30 http 404 https://registry.npmjs.org/sgmap-ludwig-ui
+31 verbose headers { date: 'Tue, 03 Mar 2015 12:49:25 GMT',
+31 verbose headers   server: 'CouchDB/1.6.1 (Erlang OTP/R14B04)',
+31 verbose headers   'content-type': 'application/json',
+31 verbose headers   'cache-control': 'max-age=0',
+31 verbose headers   'content-length': '52',
+31 verbose headers   'accept-ranges': 'bytes',
+31 verbose headers   via: '1.1 varnish',
+31 verbose headers   age: '0',
+31 verbose headers   'x-served-by': 'cache-fra1249-FRA',
+31 verbose headers   'x-cache': 'MISS',
+31 verbose headers   'x-cache-hits': '0',
+31 verbose headers   'x-timer': 'S1425386965.703925,VS0,VE110',
+31 verbose headers   'keep-alive': 'timeout=10, max=50',
+31 verbose headers   connection: 'Keep-Alive' }
+32 silly registry.get cb [ 404,
+32 silly registry.get   { date: 'Tue, 03 Mar 2015 12:49:25 GMT',
+32 silly registry.get     server: 'CouchDB/1.6.1 (Erlang OTP/R14B04)',
+32 silly registry.get     'content-type': 'application/json',
+32 silly registry.get     'cache-control': 'max-age=0',
+32 silly registry.get     'content-length': '52',
+32 silly registry.get     'accept-ranges': 'bytes',
+32 silly registry.get     via: '1.1 varnish',
+32 silly registry.get     age: '0',
+32 silly registry.get     'x-served-by': 'cache-fra1249-FRA',
+32 silly registry.get     'x-cache': 'MISS',
+32 silly registry.get     'x-cache-hits': '0',
+32 silly registry.get     'x-timer': 'S1425386965.703925,VS0,VE110',
+32 silly registry.get     'keep-alive': 'timeout=10, max=50',
+32 silly registry.get     connection: 'Keep-Alive' } ]
+33 silly lockFile 4edf00f8-sgmap-ludwig-ui sgmap-ludwig-ui@
+34 silly lockFile 4edf00f8-sgmap-ludwig-ui sgmap-ludwig-ui@
+35 error 404 404 Not Found: sgmap-ludwig-ui
+35 error 404
+35 error 404 'sgmap-ludwig-ui' is not in the npm registry.
+35 error 404 You should bug the author to publish it
+35 error 404
+35 error 404 Note that you can also install from a
+35 error 404 tarball, folder, or http url, or git url.
+36 error System Linux 3.16.0-31-generic
+37 error command "/usr/bin/node" "/usr/bin/npm" "link" "sgmap-ludwig-ui"
+38 error cwd /home/nanocom/dev/ludwig-ui
+39 error node -v v0.10.33
+40 error npm -v 1.4.28
+41 error code E404
+42 verbose exit [ 1, true ]

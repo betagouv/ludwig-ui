@@ -7,7 +7,7 @@ angular.module('ludwig').controller('ListCtrl', function($scope, $timeout, $q, $
     var appendTests = function(index) {
         return function() {
             $scope.tests = $scope.tests.concat(acceptanceTests.slice(index, index + 30));
-        }
+        };
     };
 
     $scope.tests = [];

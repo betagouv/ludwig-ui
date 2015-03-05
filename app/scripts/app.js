@@ -128,7 +128,6 @@ app.run(function($rootScope, $state, $stateParams, $window, UserService) {
 
     $rootScope.$on('$stateChangeStart', function(e, state) {
         userPromise.then(function() {
-            debugger;
             if (!UserService.user() && !state.anonymous) {
                 e.preventDefault();
                 $state.go('login');

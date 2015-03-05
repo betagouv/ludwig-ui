@@ -131,14 +131,14 @@
           <h3>Situation testée</h3>
           <scenario test="test"></scenario>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6" ng-if="!readOnly">
           <h3>Timeline</h3>
           <activity-timeline activities="test.timeline"></activity-timeline>
         </div>
       </div>
 
       <p class="liste-liens">
-        <small ng-if="!readOnly && showUrls">
+        <small ng-if="showUrls">
           [<a href="/api/situations/{{ test.scenario.situationId }}">Situation DDS</a>]
           [<a href="/api/situations/{{ test.scenario.situationId }}/openfisca-request">Requête OpenFisca</a>]
           [<a href="/api/situations/{{ test.scenario.situationId }}/openfisca-response">Réponse OpenFisca</a>]

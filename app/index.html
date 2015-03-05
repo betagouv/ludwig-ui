@@ -2,7 +2,7 @@
 <html class="no-js" ng-app="ludwig">
   <head>
     <meta charset="utf-8">
-    <title>Ludwig</title>
+    <title>Tests fonctionnels</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <script>
@@ -30,6 +30,11 @@
             <span class="navbar-text">{{ email }}</span>
             <ul class="nav navbar-nav ">
               <li><button type="button" class="btn btn-default navbar-btn" ng-click="logout()">Déconnexion</button></li>
+            </ul>
+          </div>
+          <div class="collapse navbar-collapse navbar-right" collapse="navbarCollapsed" ng-if="!email">
+            <ul class="nav navbar-nav">
+              <li><a ui-sref="login">Connexion</a></li>
             </ul>
           </div>
         </div>

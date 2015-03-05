@@ -34,9 +34,11 @@ app.config(function($locationProvider, $stateProvider, $urlRouterProvider) {
             url: '',
             controller: 'ListCtrl',
             templateUrl: 'views/list.html',
+            anonymous: true,
             resolve: {
-                acceptanceTests: function(AcceptanceTestsService, $stateParams) {
-                    if ($stateParams.testId) {
+                acceptanceTests: function(AcceptanceTestsService, UserService, $stateParams) {
+                    var isAnonymous = !UserService.user();
+                    if ($stateParams.testId && !isAnonymous) {
                         return AcceptanceTestsService.getOne($stateParams.testId);
                     } else {
                         var filters = {
@@ -45,7 +47,7 @@ app.config(function($locationProvider, $stateProvider, $urlRouterProvider) {
                             state: $stateParams.state
                         };
 
-                        return AcceptanceTestsService.get(filters);
+                        return AcceptanceTestsService.get(filters, isAnonymous);
                     }
                 }
             }
@@ -119,17 +121,18 @@ app.run(function($rootScope, $state, $stateParams, $window, UserService) {
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
 
-    UserService.retrieveUserAsync()
-        .catch(function() {
-            $state.go('login', {targetUrl: $window.location.pathname});
-        })
+    var userPromise = UserService.retrieveUserAsync()
         .finally(function() {
-            $rootScope.$on('$stateChangeStart', function(e, state) {
-                if (!UserService.user() && !state.anonymous) {
-                    e.preventDefault();
-                    $state.go('login');
-                }
-            });
             $rootScope.appReady = true;
         });
+
+    $rootScope.$on('$stateChangeStart', function(e, state) {
+        userPromise.then(function() {
+            debugger;
+            if (!UserService.user() && !state.anonymous) {
+                e.preventDefault();
+                $state.go('login');
+            }
+        });
+    });
 });

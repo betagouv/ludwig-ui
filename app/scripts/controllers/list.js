@@ -1,8 +1,10 @@
 'use strict';
 
-angular.module('ludwig').controller('ListCtrl', function($scope, $timeout, $q, $modal, $window, $state, $stateParams, $http, config, AcceptanceTestsService, acceptanceTests) {
+angular.module('ludwig').controller('ListCtrl', function($scope, $timeout, $q, $modal, $window, $state, $stateParams, $http, config, AcceptanceTestsService, UserService, acceptanceTests) {
+    var anonymous = !UserService.user();
+    $scope.readOnly = anonymous;
     $scope.launch = AcceptanceTestsService.launchTest;
-    $scope.showUrls = config.showUrls;
+    $scope.showUrls = config.showUrls && !anonymous;
 
     var appendTests = function(index) {
         return function() {
@@ -10,6 +12,7 @@ angular.module('ludwig').controller('ListCtrl', function($scope, $timeout, $q, $
         };
     };
 
+    // récupération des tests par blocs pour ne pas bloquer l'ui au chargement
     $scope.tests = [];
     $scope.ready = false;
     var promises = [];
@@ -40,7 +43,7 @@ angular.module('ludwig').controller('ListCtrl', function($scope, $timeout, $q, $
     };
 
     $scope.toggleTimeline = function(test) {
-        if (!test.timeline) {
+        if (!test.timeline && !anonymous) {
             $scope.getTimeline(test);
         }
     };

@@ -99,7 +99,7 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
         },
 
         get: function(filters, isPublic) {
-            return $http.get('/api/acceptance-tests' + (isPublic ? '/public' : ''), {params: filters}).then(function(result) {
+            return $http.get('/api' + (isPublic ? '/public' : '') + '/acceptance-tests', { params: filters }).then(function(result) {
                 var tests = result.data;
                 _.map(tests, formatValues);
                 return orderTestsByKeywords(tests);

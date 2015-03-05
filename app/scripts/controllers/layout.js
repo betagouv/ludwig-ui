@@ -30,6 +30,7 @@ angular.module('ludwig').controller('LayoutCtrl', function($scope, $state, $stat
     $scope.selectedStates = ($stateParams.state) ? toFilterObj($stateParams.state) : {};
 
     $scope.user = UserService.user();
+    $scope.readOnly = !$scope.user;
 
     var extractSelectedFilters = function(selection) {
         return _.chain(selection).keys().filter(function(current) {

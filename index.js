@@ -23,6 +23,9 @@ module.exports = function(app, baseDir, config) {
     }
 
     if ('production' === env) {
+        // prerender.io
+        app.use(require('prerender-node').set('prerenderToken', process.env.PRERENDER_TOKEN).set('protocol', 'https'));
+
         servedDirectory = 'dist';
         app.use(favicon(path.join(__dirname, 'dist', 'favicon.ico')));
     }

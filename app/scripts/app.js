@@ -36,7 +36,7 @@ app.config(function($locationProvider, $stateProvider, $urlRouterProvider) {
             templateUrl: 'views/list.html',
             anonymous: true,
             resolve: {
-                acceptanceTests: function(AcceptanceTestsService, UserService, $stateParams) {
+                tests: function(AcceptanceTestsService, UserService, $stateParams) {
                     var isAnonymous = !UserService.user();
                     if ($stateParams.testId && !isAnonymous) {
                         return AcceptanceTestsService.getOne($stateParams.testId);
@@ -57,9 +57,9 @@ app.config(function($locationProvider, $stateProvider, $urlRouterProvider) {
             controller: 'TestTimelineCtrl',
             templateUrl: 'views/test-timeline.html',
             resolve: {
-                activities: ['AcceptanceTestsService', function(AcceptanceTestsService) {
+                activities: function(AcceptanceTestsService) {
                     return AcceptanceTestsService.get();
-                }]
+                }
             }
         })
         .state('index.stats', {

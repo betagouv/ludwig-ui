@@ -1,20 +1,20 @@
 'use strict';
 
-angular.module('ludwig').controller('ListCtrl', function($scope, $timeout, $q, $modal, $window, $state, $stateParams, $http, config, AcceptanceTestsService, acceptanceTests) {
+angular.module('ludwig').controller('ListCtrl', function($scope, $timeout, $q, $modal, $window, $state, $stateParams, $http, config, tests, AcceptanceTestsService) {
     $scope.launch = AcceptanceTestsService.launchTest;
     $scope.showUrls = config.showUrls && !$scope.readOnly;
 
+    // récupération des tests par blocs pour ne pas bloquer l'ui au chargement
     var appendTests = function(index) {
         return function() {
-            $scope.tests = $scope.tests.concat(acceptanceTests.slice(index, index + 30));
+            $scope.tests = $scope.tests.concat(tests.slice(index, index + 30));
         };
     };
 
-    // récupération des tests par blocs pour ne pas bloquer l'ui au chargement
     $scope.tests = [];
     $scope.ready = false;
     var promises = [];
-    for (var i = 0; i < acceptanceTests.length; i = i + 30) {
+    for (var i = 0; i < tests.length; i = i + 30) {
         promises.push($timeout(appendTests(i)));
     }
     $q.all(promises).then(function() {
@@ -22,10 +22,10 @@ angular.module('ludwig').controller('ListCtrl', function($scope, $timeout, $q, $
             $scope.tests[0].open = true;
             $scope.toggleTimeline($scope.tests[0]);
         }
-        $scope.validTestsNb = _.where(acceptanceTests, { currentStatus: 'accepted-exact' }).length;
-        $scope.validTestsNb += _.where(acceptanceTests, { currentStatus: 'accepted-2pct' }).length;
-        $scope.warningTestsNb = _.where(acceptanceTests, { currentStatus: 'accepted-10pct' }).length;
-        $scope.errorTestsNb = _.where(acceptanceTests, { currentStatus: 'rejected' }).length;
+        $scope.validTestsNb = _.where(tests, { currentStatus: 'accepted-exact' }).length;
+        $scope.validTestsNb += _.where(tests, { currentStatus: 'accepted-2pct' }).length;
+        $scope.warningTestsNb = _.where(tests, { currentStatus: 'accepted-10pct' }).length;
+        $scope.errorTestsNb = _.where(tests, { currentStatus: 'rejected' }).length;
         $scope.ready = true;
     });
 

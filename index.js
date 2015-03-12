@@ -39,6 +39,6 @@ module.exports = function(app, baseDir, config) {
     });
 
     app.route(config.baseUrl + '/*').get(function(req, res) {
-        res.sendfile(path.join(__dirname, servedDirectory, 'index.html'));
+        res.sendFile(path.join(__dirname, servedDirectory, 'index.html'));
     });
 };

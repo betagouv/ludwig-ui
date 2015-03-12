@@ -12,7 +12,7 @@ app.config(function($locationProvider, $stateProvider, $urlRouterProvider) {
         .state('index', {
             abstract: true,
             controller: 'LayoutCtrl',
-            url: '/?testId?keyword?state?organization',
+            url: '/?keyword?state?organization',
             templateUrl: 'views/layout.html',
             resolve: {
                 keywords: function(AcceptanceTestsService) {
@@ -31,24 +31,36 @@ app.config(function($locationProvider, $stateProvider, $urlRouterProvider) {
             }
         })
         .state('index.list', {
-            url: '',
+            url: '?testId',
             controller: 'ListCtrl',
             templateUrl: 'views/list.html',
             anonymous: true,
+            onEnter: function($stateParams, $state) {
+                // redirection pour compatibilité avec param testId
+                if ($stateParams.testId) {
+                    $state.go('index.show', { testId: $stateParams.testId });
+                }
+            },
             resolve: {
                 tests: function(AcceptanceTestsService, UserService, $stateParams) {
                     var isAnonymous = !UserService.user();
-                    if ($stateParams.testId && !isAnonymous) {
-                        return AcceptanceTestsService.getOne($stateParams.testId);
-                    } else {
-                        var filters = {
-                            keyword: $stateParams.keyword,
-                            organization: $stateParams.organization,
-                            state: $stateParams.state
-                        };
+                    var filters = {
+                        keyword: $stateParams.keyword,
+                        organization: $stateParams.organization,
+                        state: $stateParams.state
+                    };
 
-                        return AcceptanceTestsService.get(filters, isAnonymous);
-                    }
+                    return AcceptanceTestsService.get(filters, isAnonymous);
+                }
+            }
+        })
+        .state('index.show', {
+            url: ':testId/show',
+            controller: 'ListCtrl',
+            templateUrl: 'views/list.html',
+            resolve: {
+                tests: function(AcceptanceTestsService, $stateParams) {
+                    return AcceptanceTestsService.getOne($stateParams.testId);
                 }
             }
         })

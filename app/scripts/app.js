@@ -52,21 +52,6 @@ app.config(function($locationProvider, $stateProvider, $urlRouterProvider) {
                 }
             }
         })
-        .state('index.timeline', {
-            url: '/timeline',
-            controller: 'TestTimelineCtrl',
-            templateUrl: 'views/test-timeline.html',
-            resolve: {
-                activities: function(AcceptanceTestsService) {
-                    return AcceptanceTestsService.get();
-                }
-            }
-        })
-        .state('index.stats', {
-            url: '/stats',
-            controller: 'TestStatsCtrl',
-            templateUrl: 'views/test-stats.html'
-        })
         .state('login', {
             url: '/login?targetUrl',
             templateUrl: 'views/login.html',

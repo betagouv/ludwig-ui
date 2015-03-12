@@ -5,7 +5,7 @@
     </div>
 
     <div class="timeline-content">
-      <h1 ng-if="showTarget"><a ui-sref="index.list({'testId':activity.target._id})">{{activity.target.name}}</a></h1>
+      <h1 ng-if="showTarget"><a ui-sref="index.show({'testId':activity.target._id})">{{activity.target.name}}</a></h1>
       <h2>{{activity | activityTypeLabelFilter}}</h2>
       <h3>{{getDate(activity)}} <span ng-if="activity.user">par {{activity.user.firstName}} {{activity.user.lastName}}</span></h3>
       <div ng-if="activity.content.rejectionMessage">
@@ -14,7 +14,7 @@
       </div>
 
       <div ng-if="activity.type === 'results_update'">
-        Nouveau statut: <span ng-bind-html="activity.content.status | activityStatus"></span>
+        Nouveau statut : <span ng-bind-html="activity.content.status | activityStatus"></span>
       </div>
     </div>
   </div>

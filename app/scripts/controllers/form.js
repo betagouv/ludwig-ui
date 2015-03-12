@@ -40,7 +40,7 @@ angular.module('ludwig').controller('FormCtrl', function($scope, $http, $state, 
         });
         var test = _.pick($scope.test, ['_id', 'situation', 'name', 'description', 'expectedResults', 'keywords']);
         $http.put('/api/acceptance-tests/' + test._id, test).then(function() {
-            $state.go('index.list', {'testId': test._id});
+            $state.go('index.show', { 'testId': test._id });
         });
     };
 });

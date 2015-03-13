@@ -147,6 +147,10 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
   @extend .navbar;
   @extend .navbar-default;
   @extend .navbar-fixed-top;
+
+  .navbar-brand {
+    padding: 1px;
+  }
 }
 
 .accordion-toggle {

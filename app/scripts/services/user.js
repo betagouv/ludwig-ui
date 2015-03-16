@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ludwig').factory('UserService', function($http, $rootScope) {
+angular.module('ludwig').factory('UserService', function($http, $rootScope, config) {
     var user;
 
     return {
@@ -9,7 +9,7 @@ angular.module('ludwig').factory('UserService', function($http, $rootScope) {
         },
 
         retrieveUserAsync: function() {
-            return $http.get('/api/profile').then(function(result) {
+            return $http.get(config.baseApiPath + '/profile').then(function(result) {
                 user = result.data;
                 $rootScope.$broadcast('userLoggedIn', user);
                 return result.data;
@@ -17,7 +17,7 @@ angular.module('ludwig').factory('UserService', function($http, $rootScope) {
         },
 
         login: function(email, password) {
-            return $http.post('/api/login', {email: email, password: password}).then(function(result) {
+            return $http.post(config.baseApiPath + '/login', {email: email, password: password}).then(function(result) {
                 user = result.data;
                 $rootScope.$broadcast('userLoggedIn', user);
                 return result.data;
@@ -25,7 +25,7 @@ angular.module('ludwig').factory('UserService', function($http, $rootScope) {
         },
 
         logout: function() {
-            return $http.post('/api/logout').then(function(result) {
+            return $http.post(config.baseApiPath + '/logout').then(function(result) {
                 user = null;
                 $rootScope.$broadcast('userLoggedOut');
                 return result;

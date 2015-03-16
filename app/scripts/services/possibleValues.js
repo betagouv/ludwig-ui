@@ -1,9 +1,9 @@
 'use strict';
 
-angular.module('ludwig').factory('PossibleValuesService', function($http) {
+angular.module('ludwig').factory('PossibleValuesService', function($http, config) {
     return {
         get: function() {
-            return $http.get('/api/acceptance-tests/possibles-values');
+            return $http.get(config.baseApiPath + '/acceptance-tests/possibles-values');
         }
     };
 });

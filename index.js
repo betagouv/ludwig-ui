@@ -9,16 +9,6 @@ module.exports = function(app, baseDir, config) {
     var servedDirectory = 'app';
 
     if ('development' === env) {
-        // Disable caching of scripts for easier testing
-        app.use(function noCache(req, res, next) {
-            if (req.url.indexOf('/js/') === 0) {
-                res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
-                res.header('Pragma', 'no-cache');
-                res.header('Expires', 0);
-            }
-            next();
-        });
-
         app.use(config.baseUrl, express.static(path.join(__dirname, '.tmp')));
     }
 

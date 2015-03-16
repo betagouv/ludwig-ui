@@ -24,14 +24,41 @@ module.exports = function (grunt) {
     // Make sure code styles are up to par and there are no obvious mistakes
     jshint: {
       options: {
-        jshintrc: '.jshintrc',
-        reporter: require('jshint-stylish')
+        reporter: require('jshint-stylish'),
+        bitwise: true,
+        camelcase: true,
+        curly: true,
+        eqeqeq: true,
+        immed: true,
+        indent: 2,
+        latedef: true,
+        newcap: true,
+        noarg: true,
+        quotmark: 'single',
+        undef: true,
+        unused: true,
+        trailing: true,
+        smarttabs: true
       },
-      all: {
-        src: [
-          'Gruntfile.js',
-          '<%= yeoman.app %>/scripts/{,*/}*.js'
-        ]
+      browser: {
+        src: ['<%= yeoman.app %>/scripts/**/*.js'],
+        options: {
+          strict: true,
+          globalstrict: true,
+          browser: true,
+          globals: {
+            angular: true,
+            moment: true,
+            _: true,
+            _s: true
+          }
+        }
+      },
+      node: {
+        src: ['*.js'],
+        options: {
+          node: true
+        }
       }
     },
 

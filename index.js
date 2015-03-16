@@ -5,10 +5,9 @@ var favicon = require('serve-favicon');
 
 
 module.exports = function(app, baseDir, config) {
-    var env = app.get('env');
     var servedDirectory = 'app';
 
-    if ('production' === env) {
+    if ('production' === app.get('env')) {
         // prerender.io
         app.use(require('prerender-node').set('prerenderToken', process.env.PRERENDER_TOKEN).set('protocol', 'https'));
 

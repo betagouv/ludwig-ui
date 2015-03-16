@@ -30,7 +30,7 @@ module.exports = function (grunt) {
         curly: true,
         eqeqeq: true,
         immed: true,
-        indent: 2,
+        indent: 4,
         latedef: true,
         newcap: true,
         noarg: true,

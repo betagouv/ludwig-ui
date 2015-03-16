@@ -1,6 +1,8 @@
+var path = require('path');
+
 var express = require('express');
 var favicon = require('serve-favicon');
-var path = require('path');
+
 
 module.exports = function(app, baseDir, config) {
     var env = app.get('env');

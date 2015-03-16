@@ -13,12 +13,14 @@ module.exports = function(app, baseDir, config) {
         app.use(require('prerender-node').set('prerenderToken', process.env.PRERENDER_TOKEN).set('protocol', 'https'));
 
         servedDirectory = 'dist';
-        app.use(favicon(path.join(__dirname, 'dist', 'favicon.ico')));
     } else {
         app.use(config.baseUrl + '/styles', express.static(path.join(__dirname, '.tmp', 'styles')));  // ugly hack to serve compiled SCSS; you will need to `grunt build` every time you change a style
     }
 
     app.use(config.baseUrl, express.static(path.join(__dirname, servedDirectory)));
+
+    app.use(favicon(path.join(__dirname, servedDirectory, 'favicon.ico')));
+
     app.use(config.baseUrl + '/scripts/template.js', express.static(path.join(baseDir, config.scenarioTemplate)));
     app.use(config.baseUrl + '/scripts/constants.js', express.static(path.join(baseDir, config.constants)));
 

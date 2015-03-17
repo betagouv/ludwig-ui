@@ -5,6 +5,9 @@ var favicon = require('serve-favicon');
 
 
 module.exports = function (app, baseDir, config) {
+    config.baseApiPath = config.baseApiPath || config.baseUrl;
+
+
     var servedDirectory = 'app';
 
     if ('production' === app.get('env')) {

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ludwig').controller('FormCtrl', function($scope, $http, $state, $stateParams, possibleValues, droitsObtenus, test, keywords) {
+angular.module('ludwig').controller('FormCtrl', function($scope, $http, $state, $stateParams, possibleValues, droitsObtenus, test, keywords, config) {
     $scope.keywords = keywords;
     $scope.droitsChoices = possibleValues;
     $scope.test = test;
@@ -39,7 +39,7 @@ angular.module('ludwig').controller('FormCtrl', function($scope, $http, $state, 
             droit.code = droit.ref.id;
         });
         var test = _.pick($scope.test, ['_id', 'situation', 'name', 'description', 'expectedResults', 'keywords']);
-        $http.put('/api/acceptance-tests/' + test._id, test).then(function() {
+        $http.put(config.baseApiPath + '/acceptance-tests/' + test._id, test).then(function() {
             $state.go('index.show', { 'testId': test._id });
         });
     };

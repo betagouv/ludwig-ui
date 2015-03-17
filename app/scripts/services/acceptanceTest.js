@@ -70,7 +70,7 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
         }
 
         test.expectedResults.forEach(function (expectedResult) {
-            expectedResult.displayLabel = droits[expectedResult.code].shortLabel;
+            expectedResult.displayLabel = (droits[expectedResult.code] ? droits[expectedResult.code].shortLabel : 'Valeur inconnue');
             expectedResult.displayStatus = expectedResult.status ? statusMapping[expectedResult.status] : 'unknown';
             expectedResult.displayExpected = displayValue(expectedResult.expectedValue);
             expectedResult.displayResult = displayValue(expectedResult.result);

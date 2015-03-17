@@ -21,7 +21,13 @@ module.exports = function (app, baseDir, config) {
 
     app.use(config.baseUrl, express.static(servedDirectory));
     app.use(config.baseUrl + '/scripts/template.js', express.static(path.join(baseDir, config.scenarioTemplate)));
-    app.use(config.baseUrl + '/scripts/constants.js', express.static(path.join(baseDir, config.constants)));
+    app.get(config.baseUrl + '/scripts/constants.js', function (req, res) {
+        res.type('application/javascript')
+           .send('angular.module("ludwigConstants", []).constant("config", ' +  // make config available to Angular's dependency management system
+                 JSON.stringify(config) +
+                 ');'
+                );
+    });
     app.use(favicon(path.join(servedDirectory, 'favicon.ico')));
     app.route(config.baseUrl + '/*').get(function (req, res) {
         res.sendFile(path.join(servedDirectory, 'index.html'));

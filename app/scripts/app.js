@@ -2,7 +2,7 @@
 
 var app = angular.module('ludwig', ['ui.router', 'ngAnimate', 'ui.bootstrap', 'ngStorage', 'ngSanitize', 'ludwigConstants']);
 
-app.config(function($locationProvider, $stateProvider, $urlRouterProvider, config) {
+app.config(function($locationProvider, $stateProvider, $urlRouterProvider, LudwigConfig) {
     moment.lang('fr');
 
     $locationProvider.html5Mode(true);
@@ -81,7 +81,7 @@ app.config(function($locationProvider, $stateProvider, $urlRouterProvider, confi
                     });
                 },
                 test: function($http, $stateParams) {
-                    return $http.get(config.baseApiPath + '/acceptance-tests/' + $stateParams.testId).then(function(result) {
+                    return $http.get(LudwigConfig.baseApiPath + '/acceptance-tests/' + $stateParams.testId).then(function(result) {
                         return result.data;
                     });
                 },
@@ -101,12 +101,12 @@ app.config(function($locationProvider, $stateProvider, $urlRouterProvider, confi
             controller: 'UsersCtrl',
             resolve: {
                 users: ['$http', function($http) {
-                    return $http.get(config.baseApiPath + '/users').then(function(result) {
+                    return $http.get(LudwigConfig.baseApiPath + '/users').then(function(result) {
                         return result.data;
                     });
                 }],
                 organizations : ['$http', function($http) {
-                    return $http.get(config.baseApiPath + '/acceptance-tests/organizations').then(function(result) {
+                    return $http.get(LudwigConfig.baseApiPath + '/acceptance-tests/organizations').then(function(result) {
                         return result.data;
                     });
                 }]

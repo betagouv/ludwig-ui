@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $filter, PossibleValuesService, config) {
+angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $filter, PossibleValuesService, LudwigConfig) {
     var droits = {};
 
     PossibleValuesService.get().then(function(result) {
@@ -85,13 +85,13 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
 
     return {
         getKeywords: function() {
-            return $http.get(config.baseApiPath + '/acceptance-tests/keywords').then(function(result) {
+            return $http.get(LudwigConfig.baseApiPath + '/acceptance-tests/keywords').then(function(result) {
                 return result.data;
             });
         },
 
         getOne: function(id) {
-            return $http.get(config.baseApiPath + '/acceptance-tests/' + id).then(function(result) {
+            return $http.get(LudwigConfig.baseApiPath + '/acceptance-tests/' + id).then(function(result) {
                 var tests = [result.data];
                 _.map(tests, formatValues);
                 return tests;
@@ -99,7 +99,7 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
         },
 
         get: function(filters, isPublic) {
-            return $http.get(config.baseApiPath + (isPublic ? '/public' : '') + '/acceptance-tests', { params: filters }).then(function(result) {
+            return $http.get(LudwigConfig.baseApiPath + (isPublic ? '/public' : '') + '/acceptance-tests', { params: filters }).then(function(result) {
                 var tests = result.data;
                 _.map(tests, formatValues);
                 return orderTestsByKeywords(tests);
@@ -107,7 +107,7 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
         },
 
         simulate: function(test) {
-            return $http.post(config.baseApiPath + '/acceptance-tests/' + test._id + '/simulation');
+            return $http.post(LudwigConfig.baseApiPath + '/acceptance-tests/' + test._id + '/simulation');
         },
 
         launchTest: function(test) {
@@ -120,7 +120,7 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
 
             var deferred = $q.defer();
 
-            var promise = $http.post(config.baseApiPath + '/acceptance-tests/' + test._id + '/executions', {});
+            var promise = $http.post(LudwigConfig.baseApiPath + '/acceptance-tests/' + test._id + '/executions', {});
             promise.then(function(result) {
                 return handleResult(result, test, deferred);
             }, function() {

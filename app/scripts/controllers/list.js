@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ludwig').controller('ListCtrl', function($scope, $timeout, $q, $modal, $window, $state, $stateParams, $http, config, tests, AcceptanceTestsService) {
+angular.module('ludwig').controller('ListCtrl', function($scope, $timeout, $q, $modal, $window, $state, $stateParams, $http, LudwigConfig, tests, AcceptanceTestsService) {
     $scope.launch = AcceptanceTestsService.launchTest;
     $scope.showUrls = config.showUrls && !$scope.readOnly;
 
@@ -30,7 +30,7 @@ angular.module('ludwig').controller('ListCtrl', function($scope, $timeout, $q, $
     });
 
     $scope.getTimeline = function(test) {
-        $http.get(config.baseApiPath + '/acceptance-tests/' + test._id + '/timeline').then(function(result) {
+        $http.get(LudwigConfig.baseApiPath + '/acceptance-tests/' + test._id + '/timeline').then(function(result) {
             if (result.data.length === 0) {
                 result.data.push({
                     type: 'no-activity'
@@ -47,7 +47,7 @@ angular.module('ludwig').controller('ListCtrl', function($scope, $timeout, $q, $
     };
 
     $scope.gotoDebugOpenFisca = function(situation) {
-        $http.get(config.baseApiPath + '/situations/' + situation + '/openfisca-request').then(function(result) {
+        $http.get(LudwigConfig.baseApiPath + '/situations/' + situation + '/openfisca-request').then(function(result) {
             var url = 'http://www.openfisca.fr/outils/trace?api_url=http://localhost:2000&situation=';
             url += encodeURIComponent(JSON.stringify(result.data));
             window.location.href = url;
@@ -55,7 +55,7 @@ angular.module('ludwig').controller('ListCtrl', function($scope, $timeout, $q, $
     };
 
     $scope.validateTest = function(test) {
-        $http.put(config.baseApiPath + '/acceptance-tests/' + test._id + '/validation', {
+        $http.put(LudwigConfig.baseApiPath + '/acceptance-tests/' + test._id + '/validation', {
             state: 'validated'
         }).then(function() {
             test.state = 'validated';
@@ -85,7 +85,7 @@ angular.module('ludwig').controller('ListCtrl', function($scope, $timeout, $q, $
         });
 
         modalInstance.result.then(function(comment) {
-            $http.put(config.baseApiPath + '/acceptance-tests/' + test._id + '/validation', {
+            $http.put(LudwigConfig.baseApiPath + '/acceptance-tests/' + test._id + '/validation', {
                 state: 'rejected',
                 rejectionMessage: comment
             }).then(function() {
@@ -96,7 +96,7 @@ angular.module('ludwig').controller('ListCtrl', function($scope, $timeout, $q, $
     };
 
     $scope.setPendingTest = function(test) {
-        $http.put(config.baseApiPath + '/acceptance-tests/' + test._id + '/validation', {
+        $http.put(LudwigConfig.baseApiPath + '/acceptance-tests/' + test._id + '/validation', {
             state: 'pending'
         }).then(function() {
             test.state = 'pending';
@@ -106,7 +106,7 @@ angular.module('ludwig').controller('ListCtrl', function($scope, $timeout, $q, $
 
     $scope.deleteTest = function(test) {
         if ($window.confirm('Êtes-vous sûr de vouloir supprimer ce test ?')) {
-            $http.delete(config.baseApiPath + '/acceptance-tests/' + test._id).then(function() {
+            $http.delete(LudwigConfig.baseApiPath + '/acceptance-tests/' + test._id).then(function() {
                 $state.go($state.current, {}, {
                     reload: true
                 });

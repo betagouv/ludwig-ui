@@ -4,7 +4,7 @@ var express = require('express');
 var favicon = require('serve-favicon');
 
 
-module.exports = function (baseDir, config) {
+module.exports = function (config) {
     config.baseApiPath = config.baseApiPath || config.baseUrl;
 
 
@@ -24,7 +24,7 @@ module.exports = function (baseDir, config) {
 
 
     app.use(config.baseUrl, express.static(servedDirectory));
-    app.use(config.baseUrl + '/scripts/template.js', express.static(path.join(baseDir, config.scenarioTemplate)));
+    app.use(config.baseUrl + '/scripts/template.js', express.static(config.scenarioTemplatePath));
     app.get(config.baseUrl + '/scripts/constants.js', function (req, res) {
         res.type('application/javascript')
            .send('angular.module("ludwigConstants", []).constant("config", ' +  // make config available to Angular's dependency management system

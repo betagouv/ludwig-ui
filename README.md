@@ -44,7 +44,7 @@ A Ludwig configuration object has to contain the items below.
 
 The possible configuration values are:
 
-- `scenarioTemplate`: path to the template that will be displayed for each test, as defined below.
+- `scenarioTemplatePath`: **absolute** path to the template that will be displayed for each test, as defined below.
 - `baseUrl`: route at which the tests UI will be served.
 - `constants`: path to the definition of an Angular module storing constants to be consumed by the `ludwig` Angular module. An example of such a file is given below.
 

@@ -1,6 +1,6 @@
 {
   "name": "ludwig-ui",
-  "description": "Module UI de tests d'acceptance",
+  "description": "Web GUI for Ludwig, the collaborative testing tool",
   "version": "0.1.0",
   "license": "AGPL-3.0",
   "repository": {

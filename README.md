@@ -46,16 +46,7 @@ The possible configuration values are:
 
 - `scenarioTemplate`: path to the template that will be displayed for each test, as defined below.
 - `baseUrl`: route at which the tests UI will be served.
-- `constants`: path to the definition of an Angular module storing constants to be consumed by the `ludwig` Angular module. An example of such a file is given below.
-
-```javascript
-angular.module('ludwigConstants', [])
-       .constant('config', {
-           scenarioTemplate: 'ui/paie.js',
-           baseUrl: '/tests'
-       });
-```
-
+- `baseApiPath`: route at which the `ludwig-api` is served. Defaults to `baseUrl`.
 
 ### Test template
 

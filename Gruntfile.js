@@ -257,15 +257,6 @@ module.exports = function (grunt) {
       }
     },
 
-    // Run some tasks in parallel to speed up the build process
-    concurrent: {
-      dist: [
-        'compass:dist',
-        'imagemin',
-        'svgmin'
-      ]
-    },
-
     // Inject application script files into index.html (doesn't include bower)
     injector: {
       options: {
@@ -305,7 +296,9 @@ module.exports = function (grunt) {
     'wiredep',
     'injector',
     'useminPrepare',
-    'concurrent:dist',
+    'compass:dist',
+    'imagemin',
+    'svgmin',
     'autoprefixer',
     'concat',
     'ngAnnotate',

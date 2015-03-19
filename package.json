@@ -48,6 +48,6 @@
   "scripts": {
     "preinstall": "sudo gem install --no-rdoc --no-ri sass compass",
     "postinstall": "node -e \"require('grunt').tasks(['build'])\"",
-    "test": "node -e \"require('grunt').tasks(['default'])\""
+    "test": "node -e \"require('grunt').tasks(['jshint', 'build'])\""
   }
 }

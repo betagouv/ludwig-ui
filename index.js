@@ -4,8 +4,19 @@ var express = require('express');
 var favicon = require('serve-favicon');
 
 
+function addDefaults(options) {
+    var result = options || {};
+
+    result.baseUrl = result.baseUrl || '/';
+    result.baseApiPath = result.baseApiPath || result.baseUrl;
+    result.scenarioTemplatePath = result.scenarioTemplatePath || path.join(__dirname, 'example', 'scenarioTemplate.js');
+
+    return result;
+}
+
+
 module.exports = function (options) {
-    options.baseApiPath = options.baseApiPath || options.baseUrl;
+    options = addDefaults(options);
 
 
     var app = express(),

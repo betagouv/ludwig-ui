@@ -46,7 +46,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "preinstall": "sudo gem install --no-rdoc --no-ri sass compass",
+    "preinstall": "gem install --no-rdoc --no-ri sass compass",
     "postinstall": "node -e \"require('grunt').tasks(['build'])\"",
     "test": "node -e \"require('grunt').tasks(['jshint', 'build'])\""
   }

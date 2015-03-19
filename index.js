@@ -4,11 +4,12 @@ var express = require('express');
 var favicon = require('serve-favicon');
 
 
-module.exports = function (app, baseDir, config) {
+module.exports = function (baseDir, config) {
     config.baseApiPath = config.baseApiPath || config.baseUrl;
 
 
-    var servedDirectory = 'app';
+    var app = express(),
+        servedDirectory = 'app';
 
     if ('production' === app.get('env')) {
         servedDirectory = 'dist';
@@ -35,4 +36,6 @@ module.exports = function (app, baseDir, config) {
     app.route(config.baseUrl + '/*').get(function (req, res) {
         res.sendFile(path.join(servedDirectory, 'index.html'));
     });
+
+    return app;
 };

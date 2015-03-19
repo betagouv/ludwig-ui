@@ -14,17 +14,17 @@ User interface for Ludwig, the collaborative testing tool
 Usage
 -----
 
+### Dependencies
+
+You will need [`gem`](https://rubygems.org/pages/download) to install Ruby dependencies.
+
 ### Build
 
-Add `ludwig-ui: "sgmap/ludwig-ui"` as a dependency in your `package.json`, and then:
+Installing this package through NPM (example: adding it as dependency) will automatically build assets.
 
-```shell
-npm install
-cd node_modules/ludwig-ui
-npm install .   # install devDependencies
-sudo gem install compass
-grunt build
-```
+Your admin password will be required to install Ruby dependencies.
+
+If you need to manually rebuild assets because you changed them, execute `npm run postinstall`.
 
 ### Serve
 

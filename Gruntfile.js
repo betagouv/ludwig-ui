@@ -179,17 +179,6 @@ module.exports = function (grunt) {
       }
     },
 
-    svgmin: {
-      dist: {
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.app %>/images',
-          src: '{,*/}*.svg',
-          dest: '<%= yeoman.dist %>/images'
-        }]
-      }
-    },
-
     htmlmin: {
       dist: {
         options: {
@@ -298,7 +287,6 @@ module.exports = function (grunt) {
     'useminPrepare',
     'compass:dist',
     'imagemin',
-    'svgmin',
     'autoprefixer',
     'concat',
     'ngAnnotate',

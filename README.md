@@ -28,9 +28,15 @@ grunt build
 
 ### Serve
 
-The `ludwig-ui` package exposes a single function that opens up a route in an [Express](http://expressjs.com) app.
+The `ludwig-ui` package exposes a single function that takes a Configuration object (defined below) and returns an [Express](http://expressjs.com) app.
 
-Once built, the content has to be served with `require('ludwig-ui')(app, __dirname, config)`, where `app` is an [Express](http://expressjs.com) app. The name of the route is given in the `config` object, defined below.
+Once built, the content is best served with the following pattern to ensure frontend and backend routes match:
+
+```javascript
+app.use(config.baseUrl, require('ludwig-ui')(config));
+```
+
+Where `app` is an [Express](http://expressjs.com) app.
 
 
 Configuration

@@ -28,15 +28,15 @@ module.exports = function (options) {
         // prerender.io
         app.use(require('prerender-node').set('prerenderToken', process.env.PRERENDER_TOKEN).set('protocol', 'https'));
     } else {
-        app.use(options.baseUrl + '/styles', express.static(path.join(__dirname, '.tmp', 'styles')));  // ugly hack to serve compiled SCSS; you will need to `grunt build` every time you change a style
+        app.use('/styles', express.static(path.join(__dirname, '.tmp', 'styles')));  // ugly hack to serve compiled SCSS; you will need to `grunt build` every time you change a style
     }
 
     servedDirectory = path.join(__dirname, servedDirectory);
 
 
-    app.use(options.baseUrl, express.static(servedDirectory));
-    app.use(options.baseUrl + '/scripts/template.js', express.static(options.scenarioTemplatePath));
-    app.get(options.baseUrl + '/scripts/constants.js', function (req, res) {
+    app.use('/', express.static(servedDirectory));
+    app.use('/scripts/template.js', express.static(options.scenarioTemplatePath));
+    app.get('/scripts/constants.js', function (req, res) {
         res.type('application/javascript')
            .send('angular.module("ludwigConstants", []).constant("config", ' +  // make options available to Angular's dependency management system
                  JSON.stringify(options) +
@@ -44,7 +44,7 @@ module.exports = function (options) {
                 );
     });
     app.use(favicon(path.join(servedDirectory, 'favicon.ico')));
-    app.route(options.baseUrl + '/*').get(function (req, res) {
+    app.route('/*').get(function (req, res) {
         res.sendFile(path.join(servedDirectory, 'index.html'));
     });
 

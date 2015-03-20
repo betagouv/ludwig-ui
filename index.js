@@ -3,6 +3,8 @@ var path = require('path');
 var express = require('express');
 var favicon = require('serve-favicon');
 
+var angular = require('./lib/angular-express-helpers.js');
+
 
 function addDefaults(options) {
     var result = options || {};
@@ -36,13 +38,7 @@ module.exports = function (options) {
 
     app.use('/', express.static(servedDirectory));
     app.use('/scripts/template.js', express.static(options.scenarioTemplatePath));
-    app.get('/scripts/constants.js', function (req, res) {
-        res.type('application/javascript')
-           .send('angular.module("ludwigConstants", []).constant("config", ' +  // make options available to Angular's dependency management system
-                 JSON.stringify(options) +
-                 ');'
-                );
-    });
+    app.get('/scripts/constants.js', angular.sendConfig(options, 'ludwigConstants'));
     app.use(favicon(path.join(servedDirectory, 'favicon.ico')));
     app.route('/*').get(function (req, res) {
         res.sendFile(path.join(servedDirectory, 'index.html'));

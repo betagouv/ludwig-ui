@@ -22,19 +22,12 @@ module.exports = function (options) {
 
 
     var app = express(),
-        servedDirectory = 'app';
+        servedDirectory = path.join(__dirname, 'dist');
 
     if ('production' === app.get('env')) {
-        servedDirectory = 'dist';
-
         // prerender.io
         app.use(require('prerender-node').set('prerenderToken', process.env.PRERENDER_TOKEN).set('protocol', 'https'));
-    } else {
-        app.use('/styles', express.static(path.join(__dirname, '.tmp', 'styles')));  // ugly hack to serve compiled SCSS; you will need to `grunt build` every time you change a style
     }
-
-    servedDirectory = path.join(__dirname, servedDirectory);
-
 
     app.use('/', express.static(servedDirectory));
     app.use('/scripts/template.js', express.static(options.scenarioTemplatePath));

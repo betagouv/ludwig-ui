@@ -107,7 +107,6 @@ module.exports = function (grunt) {
     // Compile Sass to CSS without Ruby
     sass: {
         options: {
-            sourceMap: true,
             includePaths: ['<%= yeoman.app %>/bower_components']
         },
         dist: {

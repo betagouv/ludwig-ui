@@ -21,7 +21,6 @@
     "grunt-bower-task": "^0.4.0",
     "grunt-concurrent": "1.0.0",
     "grunt-contrib-clean": "0.6.0",
-    "grunt-contrib-compass": "1.0.1",
     "grunt-contrib-concat": "0.5.0",
     "grunt-contrib-copy": "0.7.0",
     "grunt-contrib-cssmin": "0.11.0",
@@ -33,6 +32,7 @@
     "grunt-newer": "1.1.0",
     "grunt-ng-annotate": "0.9.2",
     "grunt-processhtml": "^0.3.7",
+    "grunt-sass": "^0.18.1",
     "grunt-usemin": "3.0.0",
     "grunt-wiredep": "2.0.0",
     "jshint-stylish": "1.0.0",
@@ -44,7 +44,6 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "preinstall": "gem install --no-rdoc --no-ri sass compass",
     "postinstall": "node -e \"require('grunt').tasks(['build'])\"",
     "test": "node -e \"require('grunt').tasks(['jshint', 'build'])\""
   }

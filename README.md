@@ -14,10 +14,6 @@ User interface for Ludwig, the collaborative testing tool
 Usage
 -----
 
-### Dependencies
-
-You will need [`gem`](https://rubygems.org/pages/download) to install Ruby dependencies.
-
 ### Build
 
 Installing this package through NPM (example: adding it as dependency) will automatically build assets.

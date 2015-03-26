@@ -1,11 +1,14 @@
 {
-  "name": "acceptance-tests",
-  "version": "0.0.0",
-  "homepage": "https://github.com/sgmap/accceptance-tests",
+  "name": "ludwig-ui",
+  "version": "1.0.0-alpha.2",
+  "homepage": "https://github.com/sgmap/ludwig-ui",
   "authors": [
-    "Florian Delezenne <del.florian@gmail.com>"
+    "Arnaud Kleinpeter <akleinpeter@octo.com>",
+    "Florian Delezenne <fdelezenne@octo.com>",
+    "Jérôme Desbœufs <jerome.desboeufs@data.gouv.fr>",
+    "Matti Schneider <matti.schneider@data.gouv.fr>"
   ],
-  "description": "Module de tests d'acceptance",
+  "description": "Web GUI for Ludwig, the collaborative testing tool",
   "moduleType": [
     "globals"
   ],

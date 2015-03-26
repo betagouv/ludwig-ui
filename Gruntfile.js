@@ -104,28 +104,20 @@ module.exports = function (grunt) {
       }
     },
 
-    // Compiles Sass to CSS and generates necessary files if requested
-    compass: {
-      options: {
-        sassDir: '<%= yeoman.app %>/styles',
-        cssDir: '.tmp/styles',
-        generatedImagesDir: '.tmp/images/generated',
-        imagesDir: '<%= yeoman.app %>/images',
-        javascriptsDir: '<%= yeoman.app %>/scripts',
-        fontsDir: '<%= yeoman.app %>/styles/fonts',
-        importPath: '<%= yeoman.app %>/bower_components',
-        httpImagesPath: '/images',
-        httpGeneratedImagesPath: '/images/generated',
-        httpFontsPath: '/styles/fonts',
-        relativeAssets: false,
-        assetCacheBuster: false,
-        raw: 'Sass::Script::Number.precision = 10\n'
-      },
-      dist: {
+    // Compile Sass to CSS without Ruby
+    sass: {
         options: {
-          generatedImagesDir: '<%= yeoman.dist %>/images/generated'
+            includePaths: ['<%= yeoman.app %>/bower_components']
+        },
+        dist: {
+            files: [{
+              expand: true,
+              cwd: '<%= yeoman.app %>/styles/',
+              src: '**/*.scss',
+              dest: '.tmp/styles/',
+              ext: '.css'
+            }]
         }
-      }
     },
 
     // Renames files for browser caching purposes
@@ -162,7 +154,7 @@ module.exports = function (grunt) {
     // Performs rewrites based on filerev and the useminPrepare configuration
     usemin: {
       html: ['<%= yeoman.dist %>/{,*/}*.html'],
-      css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
+      css: ['<%= yeoman.dist %>/styles/**/*.css'],
       options: {
         assetsDirs: ['<%= yeoman.dist %>','<%= yeoman.dist %>/images']
       }
@@ -285,7 +277,7 @@ module.exports = function (grunt) {
     'wiredep',
     'injector',
     'useminPrepare',
-    'compass:dist',
+    'sass:dist',
     'imagemin',
     'autoprefixer',
     'concat',

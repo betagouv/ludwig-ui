@@ -16,11 +16,9 @@ Usage
 
 ### Build
 
-Installing this package through NPM (example: adding it as dependency) will automatically build assets.
+Publishing this package through NPM will automatically build assets.
 
-Your admin password will be required to install Ruby dependencies.
-
-If you need to manually rebuild assets because you changed them, execute `npm run postinstall`.
+If you need to manually rebuild assets, run `npm run prepublish` (or `grunt build` if you have `grunt-cli` installed).
 
 ### Serve
 
@@ -46,21 +44,23 @@ A Ludwig configuration object has to contain the items below.
 
 The possible configuration values are:
 
-- `scenarioTemplatePath`: **absolute** path to the template that will be displayed for each test, as defined below.
-- `baseUrl`: route at which the tests UI will be served.
-- `baseApiPath`: route at which the `ludwig-api` is served. Defaults to `baseUrl`.
+- `scenarioTemplatePath`: path to the template that will be displayed for each test, as defined below. If relative, will be resolved against the file that sets up the server.
+- `baseUrl`: route on which the tests UI will be served.
+- `baseApiPath`: route on which the `ludwig-api` is served. Defaults to `baseUrl`.
 
 ### Test template
 
 Create an Angular template to display each test's results:
 
 ```javascript
-angular.module('ludwig').directive('scenario', function() {
+angular.module('ludwig').directive('scenario', function(config) {
     return {
         scope: { test: '=' },
         template: 'Test: {{ test.scenario | json }}'
     }
 });
 ```
+
+The `config` dependency can be used to obtain the server configuration object on the frontend.
 
 Each test will be passed a `test` object containing the object that is stored in the database, as described in `ludwig-api`.

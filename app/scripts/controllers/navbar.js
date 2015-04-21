@@ -7,6 +7,7 @@ angular.module('ludwig').controller('NavbarCtrl', function($scope, $state, UserS
         var user = UserService.user();
         if (user) {
             $scope.email = user.email;
+            $scope.isAdmin = user.isAdmin;
         }
     };
 

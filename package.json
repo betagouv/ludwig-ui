@@ -1,7 +1,7 @@
 {
   "name": "ludwig-ui",
   "description": "Web GUI for Ludwig, the collaborative testing tool",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "license": "AGPL-3.0",
   "repository": {
     "type": "git",

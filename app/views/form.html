@@ -88,7 +88,7 @@
         <label class="control-label col-md-5" for="expected-value-{{ $index }}">Valeur attendue</label>
         <div class="col-md-7">
           <div class="input-group" ng-if="false !== droit.ref.hasMontant">
-            <input id="expected-value-{{ $index }}" class="form-control" name="expectedValueNumber" type="number" step="any" ng-model="droit.expectedValue" required>
+            <input id="expected-value-{{ $index }}" class="form-control" name="expectedValueNumber" type="number" lang="fr" step="any" ng-model="droit.expectedValue" required>
             <span class="input-group-addon">€</span>
           </div>
           <div ng-if="false === droit.ref.hasMontant">

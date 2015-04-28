@@ -2,7 +2,7 @@
 
 angular.module('ludwig').controller('FormCtrl', function($scope, $http, $state, $stateParams, possibleValues, droitsObtenus, test, keywords, config) {
     $scope.keywords = keywords;
-    $scope.droitsChoices = possibleValues;
+    $scope.droitsChoices = _.sortBy(possibleValues, 'shortLabel');
     $scope.test = test;
 
     $scope.pageTitle = 'Modification du cas de test: ';

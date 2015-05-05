@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ludwig').controller('LoginCtrl', function($scope, $state, $stateParams, $window, $timeout, UserService) {
+angular.module('ludwig').controller('LoginCtrl', function($scope, $rootScope, $state, $stateParams, $window, $timeout, UserService) {
     if (UserService.user()) {
         $state.go('index.list');
     }
@@ -12,6 +12,8 @@ angular.module('ludwig').controller('LoginCtrl', function($scope, $state, $state
             .then(function() {
                 if ($stateParams.targetUrl) {
                     $window.location.pathname = $stateParams.targetUrl;
+                } else if ($rootScope.returnToState) {
+                    $state.go($rootScope.returnToState.name, $rootScope.returnToStateParams);
                 } else {
                     $state.go('index.list');
                 }

@@ -124,12 +124,12 @@ app.run(function($rootScope, $state, $stateParams, $window, UserService) {
             $rootScope.appReady = true;
         });
 
-    $rootScope.$on('$stateChangeStart', function(e, state) {
-        userPromise.then(function() {
-            if (!UserService.user() && !state.anonymous) {
-                e.preventDefault();
-                $state.go('login');
-            }
-        });
+    $rootScope.$on('$stateChangeStart', function(e, state, params) {
+        if (!UserService.user() && !state.anonymous) {
+            e.preventDefault();
+            $rootScope.returnToState = state;
+            $rootScope.returnToStateParams = params;
+            $state.go('login');
+        }
     });
 });

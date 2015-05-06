@@ -119,7 +119,7 @@ app.run(function($rootScope, $state, $stateParams, $window, UserService) {
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
 
-    var userPromise = UserService.retrieveUserAsync()
+    UserService.retrieveUserAsync()
         .finally(function() {
             $rootScope.appReady = true;
         });

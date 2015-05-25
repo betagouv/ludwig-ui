@@ -5,10 +5,7 @@ angular.module('ludwig').controller('FormCtrl', function($scope, $http, $state, 
     $scope.droitsChoices = _.sortBy(possibleValues, 'shortLabel');
     $scope.test = test;
 
-    $scope.pageTitle = 'Modification du cas de test: ';
-    if (test.name) {
-        $scope.pageTitle +=  '"' + test.name + '"';
-    }
+    $scope.pageTitle = 'Modification du test' + (test.name ? ' « ' + test.name + ' »' : '');
 
     $scope.submitLabel = 'Enregistrer';
     $scope.test.expectedResults.forEach(function(droit) {

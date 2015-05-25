@@ -82,6 +82,7 @@ app.config(function($locationProvider, $stateProvider, $urlRouterProvider, confi
                 },
                 test: function($http, $stateParams) {
                     return $http.get(config.baseApiPath + '/acceptance-tests/' + $stateParams.testId).then(function(result) {
+                        result.data.description = result.data.description || config.defaultDescription;
                         return result.data;
                     });
                 },

@@ -47,6 +47,7 @@ The possible configuration values are:
 - `scenarioTemplatePath`: path to the template that will be displayed for each test, as defined below. If relative, will be resolved against the file that sets up the server.
 - `baseUrl`: route on which the tests UI will be served.
 - `baseApiPath`: route on which the `ludwig-api` is served. Defaults to `baseUrl`.
+- `defaultDescription`: a text to fill the description field for tests.
 
 ### Test template
 

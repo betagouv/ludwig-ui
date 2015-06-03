@@ -2,7 +2,11 @@
 
 angular.module('ludwig').controller('LoginCtrl', function($scope, $rootScope, $state, $stateParams, $window, $timeout, UserService) {
     if (UserService.user()) {
-        $state.go('index.list');
+        if ($rootScope.returnToState) {
+            $state.go($rootScope.returnToState.name, $rootScope.returnToStateParams);
+        } else {
+            $state.go('index.list');
+        }
     }
 
     $scope.submit = function() {

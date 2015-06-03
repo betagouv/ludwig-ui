@@ -126,10 +126,11 @@ app.run(function($rootScope, $state, $stateParams, $window, UserService) {
 
     $rootScope.$on('$stateChangeStart', function(e, state, params) {
         if (!UserService.user() && !state.anonymous) {
-            e.preventDefault();
             $rootScope.returnToState = state;
             $rootScope.returnToStateParams = params;
+            e.preventDefault();
             $state.go('login');
         }
+
     });
 });

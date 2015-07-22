@@ -77,12 +77,6 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
         });
     };
 
-    var orderTestsByKeywords = function(tests) {
-        return _.sortBy(tests, function(test) {
-            return test.keywords.join() + test.name;
-        });
-    };
-
     return {
         getKeywords: function() {
             return $http.get(config.baseApiPath + '/acceptance-tests/keywords').then(function(result) {
@@ -102,7 +96,7 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
             return $http.get(config.baseApiPath + (isPublic ? '/public' : '') + '/acceptance-tests', { params: filters }).then(function(result) {
                 var tests = result.data;
                 _.map(tests, formatValues);
-                return orderTestsByKeywords(tests);
+                return tests;
             });
         },
 

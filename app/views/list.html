@@ -21,8 +21,8 @@
 </p>
 
 <div class="clearfix"></div>
-<div ng-repeat="(resultUpdated, testGroup) in testsGroupedByResultUpdated">
-  <p>{{ resultUpdated }}</p>
+<div ng-repeat="(resultUpdateDate, testGroup) in testsGroupedByResultUpdated">
+  <h3><small>Nouveaux résultats le</small> {{ resultUpdateDate }}</h3>
   <accordion close-others="false">
     <accordion-group
       is-open="test.open"

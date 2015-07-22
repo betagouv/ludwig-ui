@@ -62,6 +62,14 @@ module.exports = function (grunt) {
       }
     },
 
+    jscs: {
+        src: ['<%= yeoman.app %>/scripts/**/*.js'],
+        options: {
+            config: '.jscsrc',
+            verbose: true
+        }
+    },
+
     // Empties folders to start fresh
     clean: {
       dist: {
@@ -291,7 +299,8 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('default', [
-    'newer:jshint',
+    'jshint',
+    'jscs',
     'build'
   ]);
 };

@@ -21,55 +21,6 @@ module.exports = function (grunt) {
     // Project settings
     yeoman: appConfig,
 
-    // Make sure code styles are up to par and there are no obvious mistakes
-    jshint: {
-      options: {
-        reporter: require('jshint-stylish'),
-        bitwise: true,
-        camelcase: true,
-        curly: true,
-        eqeqeq: true,
-        immed: true,
-        indent: 4,
-        latedef: true,
-        newcap: true,
-        noarg: true,
-        quotmark: 'single',
-        undef: true,
-        unused: true,
-        trailing: true,
-        smarttabs: true
-      },
-      browser: {
-        src: ['<%= yeoman.app %>/scripts/**/*.js'],
-        options: {
-          strict: true,
-          globalstrict: true,
-          browser: true,
-          globals: {
-            angular: true,
-            moment: true,
-            _: true,
-            _s: true
-          }
-        }
-      },
-      node: {
-        src: ['*.js'],
-        options: {
-          node: true
-        }
-      }
-    },
-
-    jscs: {
-        src: ['<%= yeoman.app %>/scripts/**/*.js'],
-        options: {
-            config: '.jscsrc',
-            verbose: true
-        }
-    },
-
     // Empties folders to start fresh
     clean: {
       dist: {
@@ -279,7 +230,7 @@ module.exports = function (grunt) {
       }
   });
 
-  grunt.registerTask('build', [
+  grunt.registerTask('default', [
     'bower:install',
     'clean:dist',
     'wiredep',
@@ -296,11 +247,5 @@ module.exports = function (grunt) {
     'filerev',
     'usemin',
     'htmlmin'
-  ]);
-
-  grunt.registerTask('default', [
-    'jshint',
-    'jscs',
-    'build'
   ]);
 };

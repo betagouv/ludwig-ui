@@ -57,8 +57,8 @@ app.directive('keywordInput', function($timeout) {
 app.directive('ngInputEnter', function () {
     return function (scope, element, attrs) {
         element.bind('keydown keypress', function (event) {
-            if(event.which === 13 || event.which === 9) {
-                scope.$apply(function (){
+            if (event.which === 13 || event.which === 9) {
+                scope.$apply(function () {
                     scope.$eval(attrs.ngInputEnter);
                 });
 

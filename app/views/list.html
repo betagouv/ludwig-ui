@@ -21,132 +21,134 @@
 </p>
 
 <div class="clearfix"></div>
-
-<accordion close-others="false">
-  <accordion-group
-    is-open="test.open"
-    ng-class="{'panel-success': test.status === 'ok',
-              'panel-danger': test.status === 'ko',
-              'panel-warning': test.status === 'near'}"
-    ng-repeat="test in tests"
-    ng-click="toggleTimeline(test)">
-    <accordion-heading>
-      <span class="test-is-valid" ng-if="!readOnly">
-        <i ng-if="test.state === 'validated'" class="fa fa-check-circle" tooltip="Test validé"></i>
-        <i ng-if="test.state === 'pending'" class="fa fa-clock-o" tooltip="Test en attente de validation"></i>
-        <i ng-if="test.state === 'rejected'" class="fa fa-exclamation-circle" tooltip="Test refusé"></i>
-      </span>
-      <span style="color: grey;" ng-if="test.keywords.length">
-        <span ng-repeat="keyword in test.keywords">[{{keyword}}] </span>
-      </span>
-      {{ test.name }}
-      <span class="anchor" id="test-{{ test._id }}">x</span>
-    </accordion-heading>
-    <div ng-if="test.open">
-      <small class="text-muted pull-left">
-        <span ng-if="test.createdAt">
-          Créé le {{test.createdAt}}
+<div ng-repeat="(resultUpdateDate, testGroup) in testsGroupedByResultUpdated">
+  <h3><small>Nouveaux résultats le</small> {{ resultUpdateDate }}</h3>
+  <accordion close-others="false">
+    <accordion-group
+      is-open="test.open"
+      ng-class="{'panel-success': test.status === 'ok',
+                'panel-danger': test.status === 'ko',
+                'panel-warning': test.status === 'near'}"
+      ng-repeat="test in testGroup"
+      ng-click="toggleTimeline(test)">
+      <accordion-heading>
+        <span class="test-is-valid" ng-if="!readOnly">
+          <i ng-if="test.state === 'validated'" class="fa fa-check-circle" tooltip="Test validé"></i>
+          <i ng-if="test.state === 'pending'" class="fa fa-clock-o" tooltip="Test en attente de validation"></i>
+          <i ng-if="test.state === 'rejected'" class="fa fa-exclamation-circle" tooltip="Test refusé"></i>
         </span>
-        <span ng-if="test.user">
-         par {{test.user.firstName}} {{test.user.lastName}}
+        <span style="color: grey;" ng-if="test.keywords.length">
+          <span ng-repeat="keyword in test.keywords">[{{keyword}}] </span>
         </span>
-        <div ng-if="test.updatedAt">
-          Dernière mise à jour le {{test.updatedAt}}
-        </div>
-      </small>
+        {{ test.name }}
+        <span class="anchor" id="test-{{ test._id }}">x</span>
+      </accordion-heading>
+      <div ng-if="test.open">
+        <small class="text-muted pull-left">
+          <span ng-if="test.createdAt">
+            Créé le {{test.createdAt}}
+          </span>
+          <span ng-if="test.user">
+           par {{test.user.firstName}} {{test.user.lastName}}
+          </span>
+          <div ng-if="test.updatedAt">
+            Dernière mise à jour le {{test.updatedAt}}
+          </div>
+        </small>
 
-      <div ng-if="!readOnly">
-        <div class="test-actions text-right">
-          <div class="btn-group">
-            <button type="button" class="btn btn-default btn-xs" ng-disabled="test.state === 'validated'" ng-click="validateTest(test)">
-              <i class="fa fa-check text-success"></i> Valider
-            </button>
-            <button type="button" class="btn btn-default btn-xs" ng-disabled="test.state === 'pending'" ng-click="setPendingTest(test)">
-              <i class="fa fa-undo text-info"></i> Mettre en attente
-            </button>
-            <button type="button" class="btn btn-default btn-xs" ng-disabled="test.state === 'rejected'" ng-click="rejectTest(test)">
-              <i class="fa fa-times text-danger"></i> Refuser
+        <div ng-if="!readOnly">
+          <div class="test-actions text-right">
+            <div class="btn-group">
+              <button type="button" class="btn btn-default btn-xs" ng-disabled="test.state === 'validated'" ng-click="validateTest(test)">
+                <i class="fa fa-check text-success"></i> Valider
+              </button>
+              <button type="button" class="btn btn-default btn-xs" ng-disabled="test.state === 'pending'" ng-click="setPendingTest(test)">
+                <i class="fa fa-undo text-info"></i> Mettre en attente
+              </button>
+              <button type="button" class="btn btn-default btn-xs" ng-disabled="test.state === 'rejected'" ng-click="rejectTest(test)">
+                <i class="fa fa-times text-danger"></i> Refuser
+              </button>
+            </div>
+
+            <div class="btn-group">
+              <a class="btn btn-default btn-xs" ui-sref="edit({testId: test._id})">
+                <i class="fa fa-edit text-warning"></i> Modifier
+              </a>
+              <button type="button" class="btn btn-default btn-xs" ng-click="deleteTest(test)">
+                <i class="fa fa-times text-danger"></i> Supprimer
+              </button>
+            </div>
+
+            <button type="button" class="btn btn-default btn-xs" ng-disabled="test.running" ng-click="launch(test)">
+              <span ng-if="test.running"><i class="fa fa-spinner fa-spin"></i> En cours...</span>
+              <span ng-if="!test.running"><i class="fa fa-play text-primary"></i> Relancer</span>
             </button>
           </div>
 
-          <div class="btn-group">
-            <a class="btn btn-default btn-xs" ui-sref="edit({testId: test._id})">
-              <i class="fa fa-edit text-warning"></i> Modifier
-            </a>
-            <button type="button" class="btn btn-default btn-xs" ng-click="deleteTest(test)">
-              <i class="fa fa-times text-danger"></i> Supprimer
-            </button>
-          </div>
-
-          <button type="button" class="btn btn-default btn-xs" ng-disabled="test.running" ng-click="launch(test)">
-            <span ng-if="test.running"><i class="fa fa-spinner fa-spin"></i> En cours...</span>
-            <span ng-if="!test.running"><i class="fa fa-play text-primary"></i> Relancer</span>
-          </button>
+          <p class="alert alert-warning-inverse" ng-if="test.rejectionMessage">
+            <i class="fa fa-exclamation-triangle"></i>
+            <strong>Commentaire :</strong>
+            {{ test.rejectionMessage }}
+          </p>
         </div>
 
-        <p class="alert alert-warning-inverse" ng-if="test.rejectionMessage">
-          <i class="fa fa-exclamation-triangle"></i>
-          <strong>Commentaire :</strong>
-          {{ test.rejectionMessage }}
+        <div class="clearfix"></div>
+
+        <div class="row">
+          <div class="col-lg-6">
+            <h3>Description du test</h3>
+            <p ng-bind-html="test.htmlDescription"></p>
+          </div>
+          <div class="col-lg-6">
+            <h3>Valeurs attendues</h3>
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Droit</th>
+                    <th>Valeur attendue</th>
+                    <th>Valeur obtenue</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="expectedResult in test.expectedResults"
+                    ng-class="{'success': expectedResult.displayStatus === 'ok',
+                              'danger': expectedResult.displayStatus === 'ko',
+                              'info': expectedResult.displayStatus === 'unknown',
+                              'warning': expectedResult.displayStatus === 'near'}">
+                    <td>{{ expectedResult.displayLabel }}</td>
+                    <td>{{ expectedResult.displayExpected }}</td>
+                    <td>{{ expectedResult.displayResult }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-6">
+            <h3>Situation testée</h3>
+            <scenario test="test"></scenario>
+          </div>
+          <div class="col-lg-6" ng-if="!readOnly">
+            <h3>Timeline</h3>
+            <activity-timeline activities="test.timeline"></activity-timeline>
+          </div>
+        </div>
+
+        <p class="liste-liens">
+          <small ng-if="showUrls">
+            [<a href="{{ baseApiPath }}/situations/{{ test.scenario.situationId }}">Situation DDS</a>]
+            [<a href="{{ baseApiPath }}/situations/{{ test.scenario.situationId }}/openfisca-request">Requête OpenFisca</a>]
+            [<a href="{{ baseApiPath }}/situations/{{ test.scenario.situationId }}/openfisca-response">Réponse OpenFisca</a>]
+            [<a href="" ng-click="gotoDebugOpenFisca(test.scenario.situationId)">Debug OpenFisca</a>]
+            [<a href="../situations/{{ test.scenario.situationId }}">Page de simulation</a>]
+            [<a ui-sref="index.show({ testId: test._id })">Permalien</a>]
+          </small>
         </p>
       </div>
-
-      <div class="clearfix"></div>
-
-      <div class="row">
-        <div class="col-lg-6">
-          <h3>Description du test</h3>
-          <p ng-bind-html="test.htmlDescription"></p>
-        </div>
-        <div class="col-lg-6">
-          <h3>Valeurs attendues</h3>
-          <div class="table-responsive">
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th>Droit</th>
-                  <th>Valeur attendue</th>
-                  <th>Valeur obtenue</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="expectedResult in test.expectedResults"
-                  ng-class="{'success': expectedResult.displayStatus === 'ok',
-                            'danger': expectedResult.displayStatus === 'ko',
-                            'info': expectedResult.displayStatus === 'unknown',
-                            'warning': expectedResult.displayStatus === 'near'}">
-                  <td>{{ expectedResult.displayLabel }}</td>
-                  <td>{{ expectedResult.displayExpected }}</td>
-                  <td>{{ expectedResult.displayResult }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-lg-6">
-          <h3>Situation testée</h3>
-          <scenario test="test"></scenario>
-        </div>
-        <div class="col-lg-6" ng-if="!readOnly">
-          <h3>Timeline</h3>
-          <activity-timeline activities="test.timeline"></activity-timeline>
-        </div>
-      </div>
-
-      <p class="liste-liens">
-        <small ng-if="showUrls">
-          [<a href="{{ baseApiPath }}/situations/{{ test.scenario.situationId }}">Situation DDS</a>]
-          [<a href="{{ baseApiPath }}/situations/{{ test.scenario.situationId }}/openfisca-request">Requête OpenFisca</a>]
-          [<a href="{{ baseApiPath }}/situations/{{ test.scenario.situationId }}/openfisca-response">Réponse OpenFisca</a>]
-          [<a href="" ng-click="gotoDebugOpenFisca(test.scenario.situationId)">Debug OpenFisca</a>]
-          [<a href="../situations/{{ test.scenario.situationId }}">Page de simulation</a>]
-          [<a ui-sref="index.show({ testId: test._id })">Permalien</a>]
-        </small>
-      </p>
-    </div>
-  </accordion-group>
-</accordion>
+    </accordion-group>
+  </accordion>
+</div>

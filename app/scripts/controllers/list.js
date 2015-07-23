@@ -29,6 +29,10 @@ angular.module('ludwig').controller('ListCtrl', function($scope, $timeout, $q, $
         $scope.ready = true;
     });
 
+    $scope.testsGroupedByResultUpdated = _.groupBy(tests, function(test) {
+        return moment(test.resultUpdated).format('DD MMMM YYYY');
+    });
+
     $scope.baseApiPath = config.baseApiPath;
 
     $scope.getTimeline = function(test) {

@@ -2,20 +2,21 @@
 
 angular.module('ludwig').controller('FormCtrl', function($scope, $http, $state, $stateParams, possibleValues, droitsObtenus, test, keywords, config) {
     $scope.keywords = keywords;
-    $scope.droitsChoices = _.sortBy(possibleValues, 'shortLabel');
+    $scope.possibleValues = _.sortBy(possibleValues, 'shortLabel');
     $scope.test = test;
 
     $scope.pageTitle = 'Modification du test' + (test.name ? ' « ' + test.name + ' »' : '');
 
     $scope.submitLabel = 'Enregistrer';
-    $scope.test.expectedResults.forEach(function(droit) {
-        droit.ref = _.find($scope.droitsChoices, { id: droit.code });
-        droit.result = droitsObtenus[droit.code];
+
+    $scope.test.expectedResults.forEach(function(expectedResult) {
+        expectedResult.ref = _.find($scope.possibleValues, { id: expectedResult.code });
+        expectedResult.result = droitsObtenus[expectedResult.code];
     });
 
-    $scope.droitSelected = function(droit) {
-        droit.result = droitsObtenus[droit.ref.id];
-        droit.expectedValue = droit.result;
+    $scope.droitSelected = function(expectedResult) {
+        expectedResult.result = droitsObtenus[expectedResult.ref.id];
+        expectedResult.expectedValue = expectedResult.result;
     };
 
     $scope.formatDroitValue = function(value) {

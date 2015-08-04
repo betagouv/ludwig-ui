@@ -15,7 +15,7 @@ angular.module('ludwig').controller('FormCtrl', function($scope, $http, $state, 
     });
 
     $scope.droitSelected = function(expectedResult) {
-        expectedResult.result = droitsObtenus[expectedResult.ref.id];
+        expectedResult.result = droitsObtenus[expectedResult.code];
         expectedResult.expectedValue = expectedResult.result;
     };
 
@@ -33,9 +33,6 @@ angular.module('ludwig').controller('FormCtrl', function($scope, $http, $state, 
 
     $scope.submit = function() {
         $scope.submitting = true;
-        $scope.test.expectedResults.forEach(function(droit) {
-            droit.code = droit.ref.id;
-        });
         var test = _.pick($scope.test, ['_id', 'situation', 'name', 'description', 'expectedResults', 'keywords']);
         $http.put(config.baseApiPath + '/acceptance-tests/' + test._id, test).then(function() {
             $state.go('index.show', { 'testId': test._id });

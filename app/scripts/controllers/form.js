@@ -38,8 +38,8 @@ angular.module('ludwig').controller('FormCtrl', function($scope, $http, $state, 
         $scope.submitting = true;
         var test = _.pick($scope.test, ['_id', 'situation', 'name', 'description', 'expectedResults', 'keywords']);
         $http.put(config.baseApiPath + '/acceptance-tests/' + test._id, test).then(function() {
-            AcceptanceTestsService.launchTest(test).
-                finally(function () {
+            AcceptanceTestsService.launchTest(test)
+            .finally(function () {
                     $state.go('index.show', { 'testId': test._id });
                 });
         });

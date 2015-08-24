@@ -1,13 +1,16 @@
 'use strict';
 
-angular.module('ludwig').controller('FormCtrl', function($scope, $http, $state, $stateParams, possibleValues, droitsObtenus, test, keywords, config) {
+angular.module('ludwig').controller('FormCtrl', function($scope, $http, $state, $stateParams, possibleValues, droitsObtenus, test, keywords, config, AcceptanceTestsService) {
     $scope.keywords = keywords;
     $scope.possibleValues = _.sortBy(possibleValues, 'shortLabel');
     $scope.test = test;
 
     $scope.pageTitle = 'Modification du test' + (test.name ? ' « ' + test.name + ' »' : '');
 
-    $scope.submitLabel = 'Enregistrer';
+    $scope.submitting = false;
+    $scope.submitLabel = function() {
+        return $scope.submitting ? 'Enregistrement...' : 'Enregistrer';
+    };
 
     $scope.test.expectedResults.forEach(function(expectedResult) {
         expectedResult.ref = _.find($scope.possibleValues, { id: expectedResult.code });
@@ -35,7 +38,10 @@ angular.module('ludwig').controller('FormCtrl', function($scope, $http, $state, 
         $scope.submitting = true;
         var test = _.pick($scope.test, ['_id', 'situation', 'name', 'description', 'expectedResults', 'keywords']);
         $http.put(config.baseApiPath + '/acceptance-tests/' + test._id, test).then(function() {
-            $state.go('index.show', { 'testId': test._id });
+            AcceptanceTestsService.launchTest(test).
+                finally(function () {
+                    $state.go('index.show', { 'testId': test._id });
+                });
         });
     };
 });

@@ -9,7 +9,7 @@ angular.module('ludwig').controller('FormCtrl', function($scope, $http, $state, 
 
     $scope.submitting = false;
     $scope.submitLabel = function() {
-        return $scope.submitting ? 'Enregistrement...' : 'Enregistrer';
+        return $scope.submitting ? 'Enregistrement…' : 'Enregistrer';
     };
 
     $scope.test.expectedResults.forEach(function(expectedResult) {

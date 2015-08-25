@@ -106,11 +106,9 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
 
         launchTest: function(test) {
             test.running = true;
+
+            // Remove the test status during execution, so that the top bar of the test accordion is grey.
             delete test.status;
-            test.expectedResults.forEach(function(expectedResult) {
-                delete expectedResult.status;
-                delete expectedResult.result;
-            });
 
             var deferred = $q.defer();
 

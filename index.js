@@ -24,11 +24,6 @@ module.exports = function (options) {
     var app = express(),
         servedDirectory = path.join(__dirname, 'dist');
 
-    if ('production' === app.get('env')) {
-        // prerender.io
-        app.use(require('prerender-node').set('prerenderToken', process.env.PRERENDER_TOKEN).set('protocol', 'https'));
-    }
-
     app.use('/', express.static(servedDirectory));
     app.use('/scripts/template.js', express.static(options.scenarioTemplatePath));
     app.get('/scripts/constants.js', angular.sendConfig(options, 'ludwigConstants'));

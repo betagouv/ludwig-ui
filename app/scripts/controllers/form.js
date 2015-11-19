@@ -24,6 +24,10 @@ angular.module('ludwig').controller('FormCtrl', function($scope, $http, $state, 
 
     $scope.displayValue = AcceptanceTestsService.displayValue;
 
+    $scope.isUncomputabilityReason = function isUncomputabilityReason(value) {
+        return _.isString(value);
+    }
+
     $scope.removeDroit = function(droit) {
         var index = $scope.test.expectedResults.indexOf(droit);
         $scope.test.expectedResults.splice(index, 1);

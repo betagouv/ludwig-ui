@@ -36,10 +36,10 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
 
         if (_.isNumber(value)) {
             unit = unit || '€';
-            return '' + value + ' ' + unit;
+            return value + ' ' + unit;
         }
 
-        return '';
+        return value;
     }
 
     var htmlDescription = function(text) {

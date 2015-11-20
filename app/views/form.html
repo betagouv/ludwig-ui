@@ -88,11 +88,25 @@
       <div class="form-group">
         <label class="control-label col-md-5" for="expected-value-{{ $index }}">Valeur attendue</label>
         <div class="col-md-7">
-          <div class="input-group" ng-if="false !== droit.ref.hasMontant">
+          <label ng-if="droit.ref.uncomputabilityReasons">
+            <input type="checkbox"
+              ng-model="showComputableInput[$index]"
+              >
+            Calculable
+          </label>
+
+          <select ng-if="! showComputableInput[$index]"
+            class="form-control"
+            ng-options="uncomputabilityReasonId as uncomputabilityReason for (uncomputabilityReasonId, uncomputabilityReason) in droit.ref.uncomputabilityReasons"
+            ng-model="droit.expectedValue"
+          ></select>
+
+          <div class="input-group" ng-if="showComputableInput[$index] && (droit.ref.hasMontant !== false)">
             <input id="expected-value-{{ $index }}" class="form-control" name="expectedValueNumber" type="number" lang="fr" step="any" ng-model="droit.expectedValue" required>
             <span class="input-group-addon">{{ droit.ref.unit || '€' }}</span>
           </div>
-          <div ng-if="false === droit.ref.hasMontant">
+
+          <div ng-if="showComputableInput[$index] && (droit.ref.hasMontant === false)">
             <div class="btn-group">
               <button type="button" class="btn btn-xs btn-primary" btn-radio="true" ng-model="droit.expectedValue">Oui</button>
               <button type="button" class="btn btn-xs btn-primary" btn-radio="false" ng-model="droit.expectedValue">Non</button>

@@ -12,6 +12,10 @@ angular.module('ludwig').controller('FormCtrl', function($scope, $http, $state, 
         return $scope.submitting ? 'Enregistrement…' : 'Enregistrer';
     };
 
+    $scope.showComputableInput = $scope.test.expectedResults.map(function(expectedResult) {
+        return ! isUncomputabilityReason(expectedResult.expectedValue);
+    });
+
     $scope.test.expectedResults.forEach(function(expectedResult) {
         expectedResult.result = droitsObtenus[expectedResult.code];
     });
@@ -24,9 +28,10 @@ angular.module('ludwig').controller('FormCtrl', function($scope, $http, $state, 
 
     $scope.displayValue = AcceptanceTestsService.displayValue;
 
-    $scope.isUncomputabilityReason = function isUncomputabilityReason(value) {
+    function isUncomputabilityReason(value) {
         return _.isString(value);
     }
+    $scope.isUncomputabilityReason = isUncomputabilityReason;
 
     $scope.removeDroit = function(droit) {
         var index = $scope.test.expectedResults.indexOf(droit);

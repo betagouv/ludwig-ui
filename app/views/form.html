@@ -53,7 +53,7 @@
     <br>Veillez aussi à ajouter les droits dont vous testez que le montant calculé doit être nul (en mettant "0" comme valeur attendue).
   </p>
 
-  <p><button type="button" class="btn btn-default btn-xs" ng-click="test.expectedResults.push({})">Ajouter un autre droit attendu</button></p>
+  <p><button type="button" class="btn btn-default btn-xs" ng-click="test.expectedResults.push({}); showComputableInput.push(true)">Ajouter un autre droit attendu</button></p>
 
   <div class="row" ng-repeat="droit in test.expectedResults">
     <div class="col-md-1">
@@ -88,13 +88,6 @@
       <div class="form-group">
         <label class="control-label col-md-5" for="expected-value-{{ $index }}">Valeur attendue</label>
         <div class="col-md-7">
-          <label ng-if="droit.ref.uncomputabilityReasons">
-            <input type="checkbox"
-              ng-model="showComputableInput[$index]"
-              >
-            Calculable
-          </label>
-
           <select ng-if="! showComputableInput[$index]"
             class="form-control"
             ng-options="uncomputabilityReasonId as uncomputabilityReason for (uncomputabilityReasonId, uncomputabilityReason) in droit.ref.uncomputabilityReasons"
@@ -112,6 +105,13 @@
               <button type="button" class="btn btn-xs btn-primary" btn-radio="false" ng-model="droit.expectedValue">Non</button>
             </div>
           </div>
+
+          <label ng-if="droit.ref.uncomputabilityReasons">
+            <input type="checkbox"
+              ng-model="showComputableInput[$index]"
+              >
+            Calculable
+          </label>
         </div>
       </div>
     </div>

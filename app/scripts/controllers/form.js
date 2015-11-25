@@ -23,12 +23,7 @@ angular.module('ludwig').controller('FormCtrl', function($scope, $http, $state, 
         expectedResult.expectedValue = expectedResult.result;
     };
 
-    $scope.formatDroitValue = function(value) {
-        if (_.isNumber(value)) {
-            return '' + value + ' €';
-        }
-        return value ? 'Oui' : 'Non';
-    };
+    $scope.displayValue = AcceptanceTestsService.displayValue;
 
     $scope.removeDroit = function(droit) {
         var index = $scope.test.expectedResults.indexOf(droit);

@@ -1,10 +1,10 @@
 'use strict';
 
-angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $filter, PossibleValuesService, config) {
-    var droits = {};
+angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $filter, TestableQuantitiesService, config) {
+    var testableQuantities = {};
 
-    PossibleValuesService.get().then(function(result) {
-        droits = _.indexBy(result.data, 'id');
+    TestableQuantitiesService.get().then(function(result) {
+        testableQuantities = _.indexBy(result.data, 'id');
     });
 
     var statusMapping = {
@@ -71,7 +71,7 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
         }
 
         test.expectedResults.forEach(function (expectedResult) {
-            expectedResult.displayLabel = (droits[expectedResult.code] ? droits[expectedResult.code].shortLabel : 'Code "' + expectedResult.code + '"');
+            expectedResult.displayLabel = (testableQuantities[expectedResult.code] ? testableQuantities[expectedResult.code].shortLabel : 'Code "' + expectedResult.code + '"');
             expectedResult.displayStatus = expectedResult.status ? statusMapping[expectedResult.status] : 'unknown';
             expectedResult.displayExpected = displayValue(expectedResult.expectedValue);
             expectedResult.displayResult = displayValue(expectedResult.result);

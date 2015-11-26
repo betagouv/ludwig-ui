@@ -55,7 +55,10 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
 
     function updateResults(test) {
         if (test.lastExecution) {
-            test.expectedResults = test.lastExecution.results;
+            test.expectedResults.forEach(function(expectedResult) {
+                var result = _.find(test.lastExecution.results, { code: expectedResult.code });
+                _.merge(expectedResult, result);
+            });
         }
     }
 

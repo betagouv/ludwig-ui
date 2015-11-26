@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('ludwig').controller('FormCtrl', function($scope, $http, $state, $stateParams, testableQuantities, droitsObtenus, test, keywords, config, AcceptanceTestsService) {
+angular.module('ludwig').controller('FormCtrl', function($scope, $http, $state, $stateParams, possibleValues, droitsObtenus, test, keywords, config, AcceptanceTestsService) {
     $scope.keywords = keywords;
-    $scope.testableQuantities = _.sortBy(testableQuantities, 'shortLabel');
+    $scope.possibleValues = _.sortBy(possibleValues, 'shortLabel');
     $scope.test = test;
 
     $scope.pageTitle = 'Modification du test' + (test.name ? ' « ' + test.name + ' »' : '');
@@ -13,17 +13,22 @@ angular.module('ludwig').controller('FormCtrl', function($scope, $http, $state, 
     };
 
     $scope.test.expectedResults.forEach(function(expectedResult) {
-        expectedResult.ref = _.find($scope.testableQuantities, { id: expectedResult.code });
+        expectedResult.ref = _.find($scope.possibleValues, { id: expectedResult.code });
         expectedResult.result = droitsObtenus[expectedResult.code];
     });
 
     $scope.droitSelected = function(expectedResult) {
-        expectedResult.code = expectedResult.refQuantity.id;
+        expectedResult.code = expectedResult.ref.id;
         expectedResult.result = droitsObtenus[expectedResult.code];
         expectedResult.expectedValue = expectedResult.result;
     };
 
-    $scope.displayValue = AcceptanceTestsService.displayValue;
+    $scope.formatDroitValue = function(value) {
+        if (_.isNumber(value)) {
+            return '' + value + ' €';
+        }
+        return value ? 'Oui' : 'Non';
+    };
 
     $scope.removeDroit = function(droit) {
         var index = $scope.test.expectedResults.indexOf(droit);

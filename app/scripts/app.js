@@ -89,8 +89,8 @@ app.config(function($locationProvider, $stateProvider, $urlRouterProvider, confi
                 keywords: function(AcceptanceTestsService) {
                     return AcceptanceTestsService.getKeywords();
                 },
-                testableQuantities: function(TestableQuantitiesService) {
-                    return TestableQuantitiesService.get().then(function(result) {
+                possibleValues: function(PossibleValuesService) {
+                    return PossibleValuesService.get().then(function(result) {
                         return result.data;
                     });
                 }

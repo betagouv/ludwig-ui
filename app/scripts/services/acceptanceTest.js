@@ -1,10 +1,10 @@
 'use strict';
 
-angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $filter, TestableQuantitiesService, config) {
-    var testableQuantities = {};
+angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $filter, PossibleValuesService, config) {
+    var droits = {};
 
-    TestableQuantitiesService.get().then(function(result) {
-        testableQuantities = _.indexBy(result.data, 'id');
+    PossibleValuesService.get().then(function(result) {
+        droits = _.indexBy(result.data, 'id');
     });
 
     var statusMapping = {
@@ -29,18 +29,17 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
         }
     };
 
-    function displayValue(value, unite) {
+    var displayValue = function(value) {
         if (_.isBoolean(value)) {
             return value ? 'Oui' : 'Non';
         }
 
         if (_.isNumber(value)) {
-            unite = unite || '€';
-            return '' + value + ' ' + unite;
+            return '' + value + ' €';
         }
 
         return '';
-    }
+    };
 
     var htmlDescription = function(text) {
         if (!text) {
@@ -71,7 +70,7 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
         }
 
         test.expectedResults.forEach(function (expectedResult) {
-            expectedResult.displayLabel = (testableQuantities[expectedResult.code] ? testableQuantities[expectedResult.code].shortLabel : 'Code "' + expectedResult.code + '"');
+            expectedResult.displayLabel = (droits[expectedResult.code] ? droits[expectedResult.code].shortLabel : 'Code "' + expectedResult.code + '"');
             expectedResult.displayStatus = expectedResult.status ? statusMapping[expectedResult.status] : 'unknown';
             expectedResult.displayExpected = displayValue(expectedResult.expectedValue);
             expectedResult.displayResult = displayValue(expectedResult.result);
@@ -129,7 +128,6 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
             });
 
             return deferred.promise;
-        },
-        displayValue: displayValue
+        }
     };
 });

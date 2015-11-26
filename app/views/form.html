@@ -67,7 +67,7 @@
             id="droit-{{ $index }}"
             class="form-control"
             ng-options="testableQuantity as testableQuantity.shortLabel for testableQuantity in testableQuantities"
-            ng-model="droit.ref"
+            ng-model="droit.refQuantity"
             ng-change="droitSelected(droit)">
           </select>
         </div>
@@ -78,7 +78,7 @@
       <div class="form-group">
         <label class="control-label col-md-5">Valeur obtenue</label>
         <div class="col-md-7">
-          <p class="form-control-static"><b>{{ displayValue(droit.result, droit.ref.unite) }}</b></p>
+          <p class="form-control-static"><b>{{ displayValue(droit.result, droit.refQuantity.unite) }}</b></p>
         </div>
       </div>
     </div>
@@ -87,11 +87,11 @@
       <div class="form-group">
         <label class="control-label col-md-5" for="expected-value-{{ $index }}">Valeur attendue</label>
         <div class="col-md-7">
-          <div class="input-group" ng-if="false !== droit.ref.hasMontant">
+          <div class="input-group" ng-if="false !== droit.refQuantity.hasMontant">
             <input id="expected-value-{{ $index }}" class="form-control" name="expectedValueNumber" type="number" lang="fr" step="any" ng-model="droit.expectedValue" required>
-            <span class="input-group-addon">{{ droit.ref.unite || '€' }}</span>
+            <span class="input-group-addon">{{ droit.refQuantity.unite || '€' }}</span>
           </div>
-          <div ng-if="false === droit.ref.hasMontant">
+          <div ng-if="false === droit.refQuantity.hasMontant">
             <div class="btn-group">
               <button type="button" class="btn btn-xs btn-primary" btn-radio="true" ng-model="droit.expectedValue">Oui</button>
               <button type="button" class="btn btn-xs btn-primary" btn-radio="false" ng-model="droit.expectedValue">Non</button>

@@ -18,7 +18,7 @@ angular.module('ludwig').controller('FormCtrl', function($scope, $http, $state, 
     });
 
     $scope.droitSelected = function(expectedResult) {
-        expectedResult.code = expectedResult.ref.id;
+        expectedResult.code = expectedResult.refQuantity.id;
         expectedResult.result = droitsObtenus[expectedResult.code];
         expectedResult.expectedValue = expectedResult.result;
     };

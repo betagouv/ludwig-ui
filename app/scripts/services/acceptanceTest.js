@@ -18,7 +18,7 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
         test.lastExecution = angular.copy(result.data);
         test.currentStatus = test.lastExecution.status;
 
-        makeTestDisplayable(test);
+        formatValues(test);
 
         if (deferred) {
             if (test.status === 'ko') {
@@ -53,22 +53,11 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
         return result;
     };
 
-    function updateResults(test) {
-        if (test.lastExecution) {
-            test.expectedResults.forEach(function(expectedResult) {
-                var result = _.find(test.lastExecution.results, { code: expectedResult.code });
-                _.merge(expectedResult, result);
-            });
-        }
-    }
-
-    function addQuantitiesDescription(test) {
+    function formatValues(test) {
         test.expectedResults.forEach(function(expectedResult) {
             expectedResult.ref = _.find(droits, { id: expectedResult.code });
         });
-    }
 
-    function formatValues(test) {
         if (test._updated) {
             var updatedAt = moment(test._updated);
             test.updatedAt = updatedAt.format('DD/MM/YYYY à HH:mm');
@@ -81,6 +70,13 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
         test.status = statusMapping[test.currentStatus];
         test.htmlDescription = htmlDescription(test.description);
 
+        if (test.lastExecution) {
+            test.expectedResults.forEach(function(expectedResult) {
+                var result = _.find(test.lastExecution.results, { code: expectedResult.code });
+                _.merge(expectedResult, result);
+            });
+        }
+
         test.expectedResults.forEach(function (expectedResult) {
             var unite = expectedResult.ref && expectedResult.ref.unite; // for x_non_calculable, there is no ref.
             expectedResult.displayLabel = (droits[expectedResult.code] ? droits[expectedResult.code].shortLabel : 'Code "' + expectedResult.code + '"');
@@ -88,12 +84,6 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
             expectedResult.displayExpected = displayValue(expectedResult.expectedValue, unite);
             expectedResult.displayResult = displayValue(expectedResult.result, unite);
         });
-    }
-
-    function makeTestDisplayable(test) {
-        updateResults(test);
-        addQuantitiesDescription(test);
-        formatValues(test);
     }
 
     return {
@@ -106,7 +96,7 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
         getOne: function(id) {
             return $http.get(config.baseApiPath + '/acceptance-tests/' + id).then(function(result) {
                 var tests = [result.data];
-                _.map(tests, makeTestDisplayable);
+                _.map(tests, formatValues);
                 return tests;
             });
         },
@@ -114,7 +104,7 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
         get: function(filters, isPublic) {
             return $http.get(config.baseApiPath + (isPublic ? '/public' : '') + '/acceptance-tests', { params: filters }).then(function(result) {
                 var tests = result.data;
-                _.map(tests, makeTestDisplayable);
+                _.map(tests, formatValues);
                 return tests;
             });
         },

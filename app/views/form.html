@@ -89,7 +89,7 @@
         <div class="col-md-7">
           <div class="input-group" ng-if="false !== droit.ref.hasMontant">
             <input id="expected-value-{{ $index }}" class="form-control" name="expectedValueNumber" type="number" lang="fr" step="any" ng-model="droit.expectedValue" required>
-            <span class="input-group-addon">€</span>
+            <span class="input-group-addon">{{ droit.ref.unite || '€' }}</span>
           </div>
           <div ng-if="false === droit.ref.hasMontant">
             <div class="btn-group">

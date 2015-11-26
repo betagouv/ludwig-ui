@@ -88,7 +88,7 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
             expectedResult.displayExpected = displayValue(expectedResult.expectedValue, unite);
             expectedResult.displayResult = displayValue(expectedResult.result, unite);
         });
-    };
+    }
 
     function makeTestDisplayable(test) {
         updateResults(test);

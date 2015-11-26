@@ -29,17 +29,18 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
         }
     };
 
-    var displayValue = function(value) {
+    function displayValue(value, unite) {
         if (_.isBoolean(value)) {
             return value ? 'Oui' : 'Non';
         }
 
         if (_.isNumber(value)) {
-            return '' + value + ' €';
+            unite = unite || '€';
+            return '' + value + ' ' + unite;
         }
 
         return '';
-    };
+    }
 
     var htmlDescription = function(text) {
         if (!text) {
@@ -128,6 +129,7 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
             });
 
             return deferred.promise;
-        }
+        },
+        displayValue: displayValue
     };
 });

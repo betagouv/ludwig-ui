@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $filter, PossibleValuesService, config) {
-    var droits = {};
+    var possibleValues = {};
 
     PossibleValuesService.get().then(function(result) {
-        droits = _.indexBy(result.data, 'id');
+        possibleValues = _.indexBy(result.data, 'id');
     });
 
     var statusMapping = {
@@ -55,7 +55,7 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
 
     function formatValues(test) {
         test.expectedResults.forEach(function(expectedResult) {
-            expectedResult.ref = _.find(droits, { id: expectedResult.code });
+            expectedResult.ref = _.find(possibleValues, { id: expectedResult.code });
         });
 
         if (test._updated) {
@@ -79,7 +79,7 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
 
         test.expectedResults.forEach(function (expectedResult) {
             var unit = expectedResult.ref && expectedResult.ref.unit; // for x_non_calculable, there is no ref.
-            expectedResult.displayLabel = (droits[expectedResult.code] ? droits[expectedResult.code].shortLabel : 'Code "' + expectedResult.code + '"');
+            expectedResult.displayLabel = (possibleValues[expectedResult.code] ? possibleValues[expectedResult.code].shortLabel : 'Code "' + expectedResult.code + '"');
             expectedResult.displayStatus = expectedResult.status ? statusMapping[expectedResult.status] : 'unknown';
             expectedResult.displayExpected = displayValue(expectedResult.expectedValue, unit);
             expectedResult.displayResult = displayValue(expectedResult.result, unit);

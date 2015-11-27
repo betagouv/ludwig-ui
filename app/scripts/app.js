@@ -80,10 +80,11 @@ app.config(function($locationProvider, $stateProvider, $urlRouterProvider, confi
                         return result.data;
                     });
                 },
-                test: function($http, $stateParams) {
-                    return $http.get(config.baseApiPath + '/acceptance-tests/' + $stateParams.testId).then(function(result) {
-                        result.data.description = result.data.description || config.defaultDescription;
-                        return result.data;
+                test: function(AcceptanceTestsService, $stateParams) {
+                    return AcceptanceTestsService.getOne($stateParams.testId).then(function(tests) {
+                        var test = tests[0];
+                        test.description = test.description || config.defaultDescription;
+                        return test;
                     });
                 },
                 keywords: function(AcceptanceTestsService) {

@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $filter, PossibleValuesService, config) {
-    var droits = {};
+    var possibleValues = {};
 
     PossibleValuesService.get().then(function(result) {
-        droits = _.indexBy(result.data, 'id');
+        possibleValues = _.indexBy(result.data, 'id');
     });
 
     var statusMapping = {
@@ -29,17 +29,18 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
         }
     };
 
-    var displayValue = function(value) {
+    function displayValue(value, unit) {
         if (_.isBoolean(value)) {
             return value ? 'Oui' : 'Non';
         }
 
         if (_.isNumber(value)) {
-            return '' + value + ' €';
+            unit = unit || '€';
+            return '' + value + ' ' + unit;
         }
 
         return '';
-    };
+    }
 
     var htmlDescription = function(text) {
         if (!text) {
@@ -52,7 +53,11 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
         return result;
     };
 
-    var formatValues = function(test) {
+    function formatValues(test) {
+        test.expectedResults.forEach(function(expectedResult) {
+            expectedResult.ref = _.find(possibleValues, { id: expectedResult.code });
+        });
+
         if (test._updated) {
             var updatedAt = moment(test._updated);
             test.updatedAt = updatedAt.format('DD/MM/YYYY à HH:mm');
@@ -66,16 +71,20 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
         test.htmlDescription = htmlDescription(test.description);
 
         if (test.lastExecution) {
-            test.expectedResults = test.lastExecution.results;
+            test.expectedResults.forEach(function(expectedResult) {
+                var result = _.find(test.lastExecution.results, { code: expectedResult.code });
+                _.merge(expectedResult, result);
+            });
         }
 
         test.expectedResults.forEach(function (expectedResult) {
-            expectedResult.displayLabel = (droits[expectedResult.code] ? droits[expectedResult.code].shortLabel : 'Code "' + expectedResult.code + '"');
+            var unit = expectedResult.ref && expectedResult.ref.unit; // for x_non_calculable, there is no ref.
+            expectedResult.displayLabel = (possibleValues[expectedResult.code] ? possibleValues[expectedResult.code].shortLabel : 'Code "' + expectedResult.code + '"');
             expectedResult.displayStatus = expectedResult.status ? statusMapping[expectedResult.status] : 'unknown';
-            expectedResult.displayExpected = displayValue(expectedResult.expectedValue);
-            expectedResult.displayResult = displayValue(expectedResult.result);
+            expectedResult.displayExpected = displayValue(expectedResult.expectedValue, unit);
+            expectedResult.displayResult = displayValue(expectedResult.result, unit);
         });
-    };
+    }
 
     return {
         getKeywords: function() {
@@ -128,6 +137,7 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
             });
 
             return deferred.promise;
-        }
+        },
+        displayValue: displayValue
     };
 });

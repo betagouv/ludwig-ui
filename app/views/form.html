@@ -78,7 +78,7 @@
       <div class="form-group">
         <label class="control-label col-md-5">Valeur obtenue</label>
         <div class="col-md-7">
-          <p class="form-control-static"><b>{{ displayValue(droit.result, droit.ref.unite) }}</b></p>
+          <p class="form-control-static"><b>{{ displayValue(droit.result, droit.ref.unit) }}</b></p>
         </div>
       </div>
     </div>
@@ -89,7 +89,7 @@
         <div class="col-md-7">
           <div class="input-group" ng-if="false !== droit.ref.hasMontant">
             <input id="expected-value-{{ $index }}" class="form-control" name="expectedValueNumber" type="number" lang="fr" step="any" ng-model="droit.expectedValue" required>
-            <span class="input-group-addon">{{ droit.ref.unite || '€' }}</span>
+            <span class="input-group-addon">{{ droit.ref.unit || '€' }}</span>
           </div>
           <div ng-if="false === droit.ref.hasMontant">
             <div class="btn-group">

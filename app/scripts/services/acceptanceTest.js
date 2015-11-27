@@ -29,14 +29,14 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
         }
     };
 
-    function displayValue(value, unite) {
+    function displayValue(value, unit) {
         if (_.isBoolean(value)) {
             return value ? 'Oui' : 'Non';
         }
 
         if (_.isNumber(value)) {
-            unite = unite || '€';
-            return '' + value + ' ' + unite;
+            unit = unit || '€';
+            return '' + value + ' ' + unit;
         }
 
         return '';
@@ -78,11 +78,11 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
         }
 
         test.expectedResults.forEach(function (expectedResult) {
-            var unite = expectedResult.ref && expectedResult.ref.unite; // for x_non_calculable, there is no ref.
+            var unit = expectedResult.ref && expectedResult.ref.unit; // for x_non_calculable, there is no ref.
             expectedResult.displayLabel = (droits[expectedResult.code] ? droits[expectedResult.code].shortLabel : 'Code "' + expectedResult.code + '"');
             expectedResult.displayStatus = expectedResult.status ? statusMapping[expectedResult.status] : 'unknown';
-            expectedResult.displayExpected = displayValue(expectedResult.expectedValue, unite);
-            expectedResult.displayResult = displayValue(expectedResult.result, unite);
+            expectedResult.displayExpected = displayValue(expectedResult.expectedValue, unit);
+            expectedResult.displayResult = displayValue(expectedResult.result, unit);
         });
     }
 

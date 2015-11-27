@@ -13,7 +13,6 @@ angular.module('ludwig').controller('FormCtrl', function($scope, $http, $state, 
     };
 
     $scope.test.expectedResults.forEach(function(expectedResult) {
-        expectedResult.ref = _.find($scope.possibleValues, { id: expectedResult.code });
         expectedResult.result = droitsObtenus[expectedResult.code];
     });
 

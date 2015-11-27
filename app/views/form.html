@@ -66,7 +66,7 @@
           <select
             id="droit-{{ $index }}"
             class="form-control"
-            ng-options="possibleValue as possibleValue.shortLabel for possibleValue in possibleValues"
+            ng-options="possibleValue as possibleValue.shortLabel for possibleValue in possibleValues track by possibleValue.shortLabel"
             ng-model="droit.ref"
             ng-change="droitSelected(droit)">
           </select>

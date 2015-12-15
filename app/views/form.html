@@ -46,14 +46,11 @@
     </keyword-input>
   </div>
 
-  <h3>Droits attendus</h3>
+  <h3>Valeurs attendues</h3>
 
-  <p>
-    Attention : veillez à supprimer ici les droits que vous ne testez pas.
-    <br>Veillez aussi à ajouter les droits dont vous testez que le montant calculé doit être nul (en mettant "0" comme valeur attendue).
-  </p>
+  <p>Supprimez du test les valeurs dont vous n’êtes pas certain·e.</p>
 
-  <p><button type="button" class="btn btn-default btn-xs" ng-click="test.expectedResults.push({}); showComputableInput.push(true)">Ajouter un autre droit attendu</button></p>
+  <p><button type="button" class="btn btn-default btn-xs" ng-click="test.expectedResults.push({}); showComputableInput.push(true)">Tester une autre valeur</button></p>
 
   <div class="row" ng-repeat="droit in test.expectedResults">
     <div class="col-md-1">

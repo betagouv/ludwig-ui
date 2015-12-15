@@ -82,7 +82,16 @@
 
     <div class="col-md-4">
       <div class="form-group">
-        <label class="control-label col-md-5" for="expected-value-{{ $index }}">Valeur attendue</label>
+        <label class="control-label col-md-5" for="expected-value-{{ $index }}">
+          Valeur attendue
+          <span ng-if="droit.ref.uncomputabilityReasons">
+            devrait
+              <select ng-model="showComputableInput[$index]"
+                ng-options="computable as message for (message, computable) in { 'être': true, 'ne pas être': false }">
+              </select>
+            calculable
+          </span>
+        </label>
         <div class="col-md-7">
           <select ng-if="! showComputableInput[$index]"
             class="form-control"
@@ -101,13 +110,6 @@
               <button type="button" class="btn btn-xs btn-primary" btn-radio="false" ng-model="droit.expectedValue">Non</button>
             </div>
           </div>
-
-          <label ng-if="droit.ref.uncomputabilityReasons">
-            <input type="checkbox"
-              ng-model="showComputableInput[$index]"
-              >
-            Calculable
-          </label>
         </div>
       </div>
     </div>

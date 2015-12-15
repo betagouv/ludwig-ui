@@ -31,12 +31,11 @@
 <div ng-repeat="(resultUpdateDate, testGroup) in testsGroupedByResultUpdated">
   <h3><small>Nouveaux résultats le</small> {{ resultUpdateDate }}</h3>
   <accordion close-others="false">
-    <accordion-group
+    <accordion-group ng-repeat="test in testGroup"
       is-open="test.open"
       ng-class="{'panel-success': test.status === 'ok',
                 'panel-danger': test.status === 'ko',
                 'panel-warning': test.status === 'near'}"
-      ng-repeat="test in testGroup"
       ng-click="toggleTimeline(test)">
       <accordion-heading>
         <span class="test-is-valid" ng-if="!readOnly">

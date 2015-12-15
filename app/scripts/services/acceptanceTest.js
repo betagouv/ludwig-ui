@@ -29,7 +29,7 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
         }
     };
 
-    function displayValue(value, unit) {
+    function displayValueFor(id, value, unit) {
         if (_.isBoolean(value)) {
             return value ? 'Oui' : 'Non';
         }
@@ -37,6 +37,10 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
         if (_.isNumber(value)) {
             unit = unit || '€';
             return value + ' ' + unit;
+        }
+
+        if (_.isString(value) && possibleValues[id]) {
+            return 'Non calculable car ' + possibleValues[id].uncomputabilityReasons[value];
         }
 
         return value;
@@ -81,8 +85,8 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
             var unit = expectedResult.ref && expectedResult.ref.unit; // for x_non_calculable, there is no ref.
             expectedResult.displayLabel = (possibleValues[expectedResult.code] ? possibleValues[expectedResult.code].shortLabel : 'Code "' + expectedResult.code + '"');
             expectedResult.displayStatus = expectedResult.status ? statusMapping[expectedResult.status] : 'unknown';
-            expectedResult.displayExpected = displayValue(expectedResult.expectedValue, unit);
-            expectedResult.displayResult = displayValue(expectedResult.result, unit);
+            expectedResult.displayExpected = displayValueFor(expectedResult.code, expectedResult.expectedValue, unit);
+            expectedResult.displayResult = displayValueFor(expectedResult.code, expectedResult.result, unit);
         });
     }
 
@@ -138,6 +142,6 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
 
             return deferred.promise;
         },
-        displayValue: displayValue
+        displayValueFor: displayValueFor
     };
 });

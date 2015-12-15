@@ -26,7 +26,7 @@ angular.module('ludwig').controller('FormCtrl', function($scope, $http, $state, 
         expectedResult.expectedValue = expectedResult.result;
     };
 
-    $scope.displayValue = AcceptanceTestsService.displayValue;
+    $scope.displayValueFor = AcceptanceTestsService.displayValueFor;
 
     function isUncomputabilityReason(value) {
         return _.isString(value);

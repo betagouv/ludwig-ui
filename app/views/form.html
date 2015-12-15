@@ -78,8 +78,7 @@
       <div class="form-group">
         <label class="control-label col-md-5">Valeur obtenue</label>
         <div class="col-md-7">
-          <p ng-if="isUncomputabilityReason(droit.result)">Non calculable car {{ droit.ref.uncomputabilityReasons[droit.result] }}.</p>
-          <p ng-if="! isUncomputabilityReason(droit.result)" class="form-control-static"><b>{{ displayValue(droit.result, droit.ref.unit) }}</b></p>
+          <p class="form-control-static"><b>{{ displayValueFor(droit.code, droit.result, droit.ref.unit) }}</b></p>
         </div>
       </div>
     </div>
@@ -90,7 +89,7 @@
         <div class="col-md-7">
           <select ng-if="! showComputableInput[$index]"
             class="form-control"
-            ng-options="uncomputabilityReasonId as uncomputabilityReason for (uncomputabilityReasonId, uncomputabilityReason) in droit.ref.uncomputabilityReasons"
+            ng-options="uncomputabilityReasonId as displayValueFor(droit.code, uncomputabilityReasonId) for (uncomputabilityReasonId, uncomputabilityReason) in droit.ref.uncomputabilityReasons"
             ng-model="droit.expectedValue"
           ></select>
 

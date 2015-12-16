@@ -29,13 +29,14 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
         }
     };
 
-    function displayValueFor(id, value, unit) {
+    function displayValueFor(id, value) {
         if (_.isBoolean(value)) {
             return value ? 'Oui' : 'Non';
         }
 
         if (_.isNumber(value)) {
-            unit = unit || '€';
+            var unit = possibleValues[id].unit || '€';
+
             return value + ' ' + unit;
         }
 
@@ -82,11 +83,10 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
         }
 
         test.expectedResults.forEach(function (expectedResult) {
-            var unit = expectedResult.ref && expectedResult.ref.unit; // for x_non_calculable, there is no ref.
             expectedResult.displayLabel = (possibleValues[expectedResult.code] ? possibleValues[expectedResult.code].shortLabel : 'Code "' + expectedResult.code + '"');
             expectedResult.displayStatus = expectedResult.status ? statusMapping[expectedResult.status] : 'unknown';
-            expectedResult.displayExpected = displayValueFor(expectedResult.code, expectedResult.expectedValue, unit);
-            expectedResult.displayResult = displayValueFor(expectedResult.code, expectedResult.result, unit);
+            expectedResult.displayExpected = displayValueFor(expectedResult.code, expectedResult.expectedValue);
+            expectedResult.displayResult = displayValueFor(expectedResult.code, expectedResult.result);
         });
     }
 

@@ -85,9 +85,8 @@
         <label class="control-label col-md-5" for="expected-value-{{ $index }}">
           Valeur attendue
           <span ng-if="droit.ref.uncomputabilityReasons">
-            devrait
               <select ng-model="showComputableInput[$index]"
-                ng-options="computable as message for (message, computable) in { 'être': true, 'ne pas être': false }">
+                ng-options="computable as message for (message, computable) in { 'devrait être': true, 'ne devrait pas être': false }">
               </select>
             calculable
           </span>

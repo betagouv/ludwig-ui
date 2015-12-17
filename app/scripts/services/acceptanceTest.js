@@ -35,13 +35,15 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
         }
 
         if (_.isNumber(value)) {
-            var unit = possibleValues[id].unit || '€';
+            var unit = possibleValues[id] && possibleValues[id].unit || '€';
 
             return value + ' ' + unit;
         }
 
         if (_.isString(value) && possibleValues[id]) {
-            return 'Non calculable car ' + possibleValues[id].uncomputabilityReasons[value];
+            var reason = possibleValues[id].uncomputabilityReasons && possibleValues[id].uncomputabilityReasons[value] || 'raison non définie';
+
+            return 'Non calculable car ' + reason;
         }
 
         return value;

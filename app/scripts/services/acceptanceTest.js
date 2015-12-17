@@ -29,17 +29,24 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
         }
     };
 
-    function displayValue(value, unit) {
+    function displayValueFor(id, value) {
         if (_.isBoolean(value)) {
             return value ? 'Oui' : 'Non';
         }
 
         if (_.isNumber(value)) {
-            unit = unit || '€';
-            return '' + value + ' ' + unit;
+            var unit = possibleValues[id] && possibleValues[id].unit || '€';
+
+            return value + ' ' + unit;
         }
 
-        return '';
+        if (_.isString(value) && possibleValues[id]) {
+            var reason = possibleValues[id].uncomputabilityReasons && possibleValues[id].uncomputabilityReasons[value] || 'raison non définie';
+
+            return 'Non calculable car ' + reason;
+        }
+
+        return value;
     }
 
     var htmlDescription = function(text) {
@@ -78,11 +85,10 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
         }
 
         test.expectedResults.forEach(function (expectedResult) {
-            var unit = expectedResult.ref && expectedResult.ref.unit; // for x_non_calculable, there is no ref.
             expectedResult.displayLabel = (possibleValues[expectedResult.code] ? possibleValues[expectedResult.code].shortLabel : 'Code "' + expectedResult.code + '"');
             expectedResult.displayStatus = expectedResult.status ? statusMapping[expectedResult.status] : 'unknown';
-            expectedResult.displayExpected = displayValue(expectedResult.expectedValue, unit);
-            expectedResult.displayResult = displayValue(expectedResult.result, unit);
+            expectedResult.displayExpected = displayValueFor(expectedResult.code, expectedResult.expectedValue);
+            expectedResult.displayResult = displayValueFor(expectedResult.code, expectedResult.result);
         });
     }
 
@@ -138,6 +144,6 @@ angular.module('ludwig').factory('AcceptanceTestsService', function($q, $http, $
 
             return deferred.promise;
         },
-        displayValue: displayValue
+        displayValueFor: displayValueFor
     };
 });

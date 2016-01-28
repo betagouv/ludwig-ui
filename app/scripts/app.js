@@ -12,7 +12,7 @@ app.config(function($locationProvider, $stateProvider, $urlRouterProvider, confi
         .state('index', {
             abstract: true,
             controller: 'LayoutCtrl',
-            url: '/?keyword?state?organization',
+            url: '/?keyword?state?organization?status',
             templateUrl: 'views/layout.html',
             resolve: {
                 keywords: function(AcceptanceTestsService) {
@@ -47,7 +47,8 @@ app.config(function($locationProvider, $stateProvider, $urlRouterProvider, confi
                     var filters = {
                         keyword: $stateParams.keyword,
                         organization: $stateParams.organization,
-                        state: $stateParams.state
+                        state: $stateParams.state,
+                        status: $stateParams.status
                     };
 
                     return AcceptanceTestsService.get(filters, isAnonymous);

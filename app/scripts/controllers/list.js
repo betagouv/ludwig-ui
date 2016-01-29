@@ -30,7 +30,7 @@ angular.module('ludwig').controller('ListCtrl', function($scope, $timeout, $q, $
     });
 
     $scope.testsGroupedByResultUpdated = _.groupBy(tests, function(test) {
-        return moment(test.resultUpdated).format('DD MMMM YYYY');
+        return moment(test.resultUpdated).format('YYYY-MM-DD');
     });
 
     $scope.baseApiPath = config.baseApiPath;

@@ -17,7 +17,7 @@
   <span class="tag-show" ng-click="toggleShowTags()">Liste des mots clés</span>
   <div ng-if="showTags">
     <ul class="tag-show-list">
-      <li class="tag-choice-select" ng-repeat="keyword in keywords | filter:isSelected" ng-click="addKeyword(keyword)">
+      <li class="tag-choice-select" ng-repeat="keyword in keywords | orderBy:removeDiacritics | filter:isSelected" ng-click="addKeyword(keyword)">
         {{keyword}} <i class="fa fa-plus"></i>
       </li>
     </ul>

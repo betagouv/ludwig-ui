@@ -50,6 +50,13 @@ app.directive('keywordInput', function($timeout) {
             $scope.isSelected = function(keyword) {
                 return false === $scope.selectedKeywords.indexOf(keyword) >= 0;
             };
+
+            $scope.removeDiacritics = function(string) {
+                return string
+                    .toLowerCase()
+                    .replace(/[éèê]/, 'e')
+                    .replace(/[à]/, 'a');
+            };
         }
     };
 });

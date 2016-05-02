@@ -9,11 +9,15 @@ angular.module('ludwig').factory('UserService', function($http, $rootScope, conf
         },
 
         retrieveUserAsync: function() {
-            return $http.get(config.baseApiPath + '/profile').then(function(result) {
+            return  this.getUserPromise().then(function(result) {
                 user = result.data;
                 $rootScope.$broadcast('userLoggedIn', user);
                 return result.data;
             });
+        },
+
+        getUserPromise: function() {
+            return $http.get(config.baseApiPath + '/profile');
         },
 
         login: function(email, password) {

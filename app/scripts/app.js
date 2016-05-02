@@ -43,15 +43,18 @@ app.config(function($locationProvider, $stateProvider, $urlRouterProvider, confi
             },
             resolve: {
                 tests: function(AcceptanceTestsService, UserService, $stateParams) {
-                    var isAnonymous = !UserService.user();
                     var filters = {
                         keyword: $stateParams.keyword,
                         organization: $stateParams.organization,
                         state: $stateParams.state,
                         status: $stateParams.status
                     };
-
-                    return AcceptanceTestsService.get(filters, isAnonymous);
+                    return UserService.getUserPromise().then(function(result) {
+                        // Don't use anonymous mode when the user is logged (to display test creators, etc.)
+                        return AcceptanceTestsService.get(filters, false);
+                    }).catch(function() {
+                        return AcceptanceTestsService.get(filters, true);
+                    });
                 }
             }
         })

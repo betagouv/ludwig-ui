@@ -55,7 +55,7 @@
             Créé le {{test.createdAt}}
           </span>
           <span ng-if="test.user">
-           par {{test.user.firstName}} {{test.user.lastName}}
+           par {{test.user.firstName ? (test.user.firstName + ' ' + test.user.lastName) : test.user.organization }}
           </span>
           <div ng-if="test.updatedAt">
             Dernière mise à jour le {{test.updatedAt}}

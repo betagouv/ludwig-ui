@@ -1,7 +1,6 @@
 var path = require('path');
 
 var express = require('express');
-var favicon = require('serve-favicon');
 
 var angular = require('./lib/angular-express-helpers.js');
 
@@ -27,7 +26,6 @@ module.exports = function (options) {
     app.use('/', express.static(servedDirectory));
     app.use('/scripts/template.js', express.static(options.scenarioTemplatePath));
     app.get('/scripts/constants.js', angular.sendConfig(options, 'ludwigConstants'));
-    app.use(favicon(path.join(servedDirectory, 'favicon.ico')));
     app.route('/*').get(function (req, res) {
         res.sendFile(path.join(servedDirectory, 'index.html'));
     });
